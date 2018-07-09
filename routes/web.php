@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/room/{id}', 'RoomController@show')->where('id','[0-9]+');
+Route::get('/room/create', 'RoomController@create');
+Route::post('/room/store', 'RoomController@store');
+Route::delete('/room/{id}', 'CommentController@destroy');

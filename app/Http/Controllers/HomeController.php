@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Room;
+use App\User;
+use Auth;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      // dd($room);
+      // dd(Auth::user());
+      // $rooms = Room::findOrFail(Auth::user()->id)->get();
+      $rooms = Room::all();
+      // dd($rooms);
+
+
+        return view('home')->with('rooms',$rooms);
     }
 }
