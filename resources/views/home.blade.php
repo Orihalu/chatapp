@@ -35,6 +35,16 @@
 
                     </form>
 
+                    <form method="post" action="{{ action('UserController@leave',$room) }}">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary btn-lg">leave</button>
+                      </div>
+
+                    </form>
+
+
                 </div>
               </div>
               @empty

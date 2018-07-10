@@ -25,3 +25,4 @@ Route::delete('/room/{id}', 'CommentController@destroy');
 
 
 Route::post('/room/{id}/join','UserController@join');
+Route::post('/room/{id}/leave', 'UserController@leave');

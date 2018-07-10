@@ -39,14 +39,14 @@ class RoomController extends Controller
       // $room->save();
       // dd(Auth::user()->rooms->where('id',55));
       //
-      $aaa = Auth::user()->rooms->find(55)->name;
-      dd($aaa);
+      // $aaa = Auth::user()->rooms->find(55)->name;
+      // dd($aaa);
 
 
-
-      foreach ($aaa as $a) {
-        dd($a->name);
-      }
+      //
+      // foreach ($aaa as $a) {
+      //   dd($a->name);
+      // }
       // $user_id = Auth::user()->id;
       // $room_names = Room::where('user_id', $user_id)->get('name');
       // dd($room_names);

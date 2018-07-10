@@ -51,6 +51,15 @@ class UserController extends Controller
       return redirect('/home')->with('status',__('さんかしました'));
     }
 
+
+    public function leave(Room $id) {
+      $user = Auth::user();
+      $room = Room::find($id);
+      $room_id = $id;
+      $user->rooms()->detach($room_id);
+      return redirect('/home')->with('status',__('leave your group'));
+    }
+
     /**
      * Display the specified resource.
      *
