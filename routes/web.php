@@ -22,3 +22,6 @@ Route::get('/room/{id}', 'RoomController@show')->where('id','[0-9]+');
 Route::get('/room/create', 'RoomController@create');
 Route::post('/room/store', 'RoomController@store');
 Route::delete('/room/{id}', 'CommentController@destroy');
+
+
+Route::post('/room/{id}/join','UserController@join');

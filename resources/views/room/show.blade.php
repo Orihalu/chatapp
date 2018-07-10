@@ -4,7 +4,6 @@
 <div class="container">
   <h1>{{$room->name}}</h1>
 
-
 <h1>commentbody</h1>
 
 <footer class="fixed-bottom">

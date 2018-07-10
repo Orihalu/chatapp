@@ -30,6 +30,6 @@ class User extends Authenticatable
     ];
 
     public function rooms() {
-      return $this->belongsToMany('App\Room','user_room');
+      return $this->belongsToMany('App\Room');
     }
 }
