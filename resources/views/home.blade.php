@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+{{--
+@foreach ($collection_array as $room)
 
+{{var_dump($room->room_id)}}
+
+
+@endforeach
+--}}
 
 
 <div class="container">
@@ -16,17 +23,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="{{ url('/room/create') }}">createとか</a>
-                    <p>
-                      You are logged in!
-                    </p>
+
+                    <a href="{{ url('/room/create') }}">＋ルーム作成</a>
+
                 </div>
               </div>
-              @forelse ($rooms as $room)
+              @forelse ($collection_array as $room)
               <div class="card">
                 <div class="card-body">
-                    <a href="{{ action('RoomController@show',$room) }}" >{{$room->name}}</a>
-                    <form method="post" action="{{ action('UserController@join',$room) }}">
+                    <a href="{{ action('RoomController@show',$room->room_id) }}" >{{$room->room_id}}</a>
+                    <form method="post" action="{{ action('UserController@join',$room->room_id) }}">
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                       <div class="form-group">
@@ -35,7 +41,7 @@
 
                     </form>
 
-                    <form method="post" action="{{ action('UserController@leave',$room) }}">
+                    <form method="post" action="{{ action('UserController@leave',$room->room_id) }}">
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                       <div class="form-group">

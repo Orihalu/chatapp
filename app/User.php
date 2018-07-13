@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     public function rooms() {
-      return $this->belongsToMany('App\Room');
+      return $this->belongsToMany('App\Room')->withPivot('room_id');
     }
 
     public function comments() {

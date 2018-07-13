@@ -3,11 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
+use App\User;
+use DB;
 
 class Room extends Model
 {
     protected $fillable = [
-      'room_id','id','user_id','name'
+      'id','user_id','name'
     ];
 
 
@@ -16,6 +19,8 @@ class Room extends Model
     }
 
     public function comments() {
-      return $this->hasMany('App\Commnet');
+      return $this->hasMany('App\Comment');
     }
+
+
 }

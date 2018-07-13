@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Room;
 use App\User;
+use App\Comment;
 use Auth;
 
 
@@ -17,7 +18,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users =  User::all();
+        // dd($users);
+
+
+        return view('user.index')->with('users',$users);
+
     }
 
     /**
@@ -68,7 +74,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      // dd($id);
+      $user = User::findOrFail($id);
+      // dd($user);
+        return view('user.show')->with('user', $user);
     }
 
     /**
@@ -103,5 +112,21 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request) {
+      $keyword = $request->name;
+
+      $query = User::query();
+
+      if(!empty($keyword)) {
+        $query->where('name','like','%'.$keyword.'%');
+      }
+      $users = $query->latest()->paginate(10);
+
+      return view('user.index')->with([
+        'users' => $users,
+        'keyword' => $keyword,
+      ]);
     }
 }

@@ -4,14 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use App\Comment;
 use Auth;
 use App\User;
 use Log;
-
+use DB;
 
 class RoomController extends Controller
 {
+    public function index() {
+    $rooms = Room::all();
+    $rooms = Room::paginate(5);
+    return view('room.index')->with('rooms',$rooms);
+  }
+
+
+
     public function show($id) {
+
       $room = Room::findOrFail($id);
       return view('room.show')->withRoom($room);
     }
@@ -22,7 +32,7 @@ class RoomController extends Controller
 
     public function store(Request $request) {
       $room = new Room();
-      // dd($request->user_id);
+      // dd($request->name);
       // $room->room_id = $request->id;
       $user = new User();
       $room->user_id = $request->user_id;
@@ -54,5 +64,25 @@ class RoomController extends Controller
 
 
       return redirect('/home');
+    }
+
+
+    public function search(Request $request) {
+      // dd($request->name);
+      $keyword = $request->name;
+
+      $query = Room::query();
+// dd($query->latest());
+      if(!empty($keyword)) {
+          $query->where('name','like','%'.$keyword.'%');
+      }
+      // dd($query);
+      $rooms = $query->latest()->paginate(10);
+      // $rooms = Room::paginate(5);
+      // dd(Room::paginate(5));
+      return view('room.index')->with('rooms', $rooms)->with('keyword', $keyword);
+
+      // dd($rooms);
+
     }
 }
