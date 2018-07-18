@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users =  User::all();
+        $users =  User::latest()->get();
         // dd($users);
 
 
@@ -54,7 +54,7 @@ class UserController extends Controller
         // $room->users()->attach($request->user_id);
 
         $user->rooms()->attach($room_id);
-      return redirect('/home')->with('status',__('さんかしました'));
+      return redirect('/home')->with('status','さんかしました');
     }
 
 
@@ -63,7 +63,7 @@ class UserController extends Controller
       $room = Room::find($id);
       $room_id = $id;
       $user->rooms()->detach($room_id);
-      return redirect('/home')->with('status',__('leave your group'));
+      return redirect()->back()->with('status','leave the group');
     }
 
     /**

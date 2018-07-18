@@ -14,35 +14,48 @@
             <button class="btn btn-success">検索</button>
           </form>
 
-
-
-
-
-
           {{--検索エンド--}}
+
 
             <div class="card">
               @forelse ($rooms as $room)
               <div class="card">
                 <div class="card-body">
                     <a href="{{ action('RoomController@show',$room) }}" >{{$room->name}}</a>
+
+{{$room->users}}
+{{Auth::user()->id}}
+                    @if(empty($room->users->toArray()))
                     <form method="post" action="{{ action('UserController@join',$room) }}">
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-lg">sanka</button>
-                      </div>
+                    gggg
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg">sanka</button>
+                    </div>
+                    </form>
+@elseif($room->users->contains('id',Auth::user()->id))
+<form method="post" action="{{ action('UserController@leave',$room) }}">
+ {{ csrf_field() }}
+ <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+ <div class="form-group">
+     <button type="submit" class="btn btn-danger btn-lg">leave</button>
+ </div>
+ @else
 
+ <form method="post" action="{{ action('UserController@join',$room) }}">
+   {{ csrf_field() }}
+   <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+ gggg
+ <div class="form-group">
+     <button type="submit" class="btn btn-primary btn-lg">sanka</button>
+ </div>
+ </form>
+
+
+                    @endif
                     </form>
 
-                    <form method="post" action="{{ action('UserController@leave',$room) }}">
-                      {{ csrf_field() }}
-                      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-lg">leave</button>
-                      </div>
-
-                    </form>
                   </div>
                 </div>
                 @empty
@@ -52,7 +65,6 @@
                   </div>
                 </div>
                 @endforelse
-                
               </div>
           </div>
       </div>

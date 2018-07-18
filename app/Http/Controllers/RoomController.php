@@ -13,8 +13,9 @@ use DB;
 class RoomController extends Controller
 {
     public function index() {
-    $rooms = Room::all();
-    $rooms = Room::paginate(5);
+    $rooms = Room::latest()->get();
+    // $rooms = Room::paginate(5);
+    // dd($rooms->toArray());
     return view('room.index')->with('rooms',$rooms);
   }
 

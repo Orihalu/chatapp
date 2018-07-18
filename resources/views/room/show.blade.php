@@ -3,6 +3,13 @@
 {{--{{dd($room)}}--}}
 <div class="container" >
   <h1>{{$room->name}}</h1>
+  <?php $aa = $room->users->toArray();
+  $bb = $room->toArray();
+
+   ?>
+  {{dd(in_array($aa, $bb))}}
+
+{{dd($room->users)}}
 <h1>commentbody</h1>
 <h2>
   @foreach ($room->comments as $comment)
