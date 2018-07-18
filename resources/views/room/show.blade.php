@@ -7,9 +7,9 @@
   $bb = $room->toArray();
 
    ?>
-  {{dd(in_array($aa, $bb))}}
+  {{--dd(in_array($aa, $bb))--}}
 
-{{dd($room->users)}}
+{{--dd($room->users)--}}
 <h1>commentbody</h1>
 <h2>
   @foreach ($room->comments as $comment)

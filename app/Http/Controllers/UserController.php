@@ -54,7 +54,7 @@ class UserController extends Controller
         // $room->users()->attach($request->user_id);
 
         $user->rooms()->attach($room_id);
-      return redirect('/home')->with('status','さんかしました');
+      return redirect()->back()->with('status','さんかしました');
     }
 
 

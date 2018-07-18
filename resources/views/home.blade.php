@@ -28,31 +28,20 @@
 
                 </div>
               </div>
-              @forelse ($collection_array as $room)
-              <div class="card">
-                <div class="card-body">
-                    <a href="{{ action('RoomController@show',$room->room_id) }}" >{{$room->room_id}}</a>
-                    <form method="post" action="{{ action('UserController@join',$room->room_id) }}">
-                      {{ csrf_field() }}
-                      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-lg">sanka</button>
-                      </div>
-
-                    </form>
-
-                    <form method="post" action="{{ action('UserController@leave',$room->room_id) }}">
-                      {{ csrf_field() }}
-                      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-lg">leave</button>
-                      </div>
-
-                    </form>
-
-
+              @forelse ($rooms as $room)
+                @if($room->users->contains('id',Auth::user()->id))
+                <div class="card">
+                  <div class="card-body">
+                      <a href="{{ action('RoomController@show',$room) }}" >{{$room->name}}</a>
+                      <form method="post" action="{{ action('UserController@leave',$room) }}">
+                       {{ csrf_field() }}
+                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                       <div class="form-group">
+                           <button type="submit" style="float:right;" class="btn btn-danger btn-lg">leave</button>
+                       </div>
+                  </div>
                 </div>
-              </div>
+                @endif
               @empty
               <div class="card">
                 <div class="card-body">
