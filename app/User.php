@@ -38,6 +38,19 @@ class User extends Authenticatable
     }
 
     public function users() {
-      $this->hasManyThrough('App\User','App\Relationship');
+      return $this->hasManyThrough('App\User','App\Relationship');
     }
+
+    // public function relationships() {
+    //   return $this->belongsToMany('App\User','relationships','follow_id','follower_id')->withPivot('follower_id');
+    // }
+
+    public function following() {
+      return $this->belongsToMany('App\User','relationships','follow_id','follower_id')->withPivot('follow_id','follower_id');
+    }
+    public function followers() {
+      return $this->belongsToMany('App\User','relationships','follower_id', 'follow_id');
+    }
+
+
 }

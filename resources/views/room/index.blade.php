@@ -9,6 +9,10 @@
       <div class="alert alert-success" role="alert">
           {{ session('status') }}
       </div>
+  @elseif (session('danger'))
+      <div class="alert alert-danger" role="alert">
+          {{ session('danger') }}
+      </div>
   @endif
     <div class="row justify-content-center">
 

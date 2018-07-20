@@ -31,9 +31,12 @@ Route::delete('/room/{id}', 'CommentController@destroy');
 
 Route::post('/room/{id}/join','UserController@join');
 Route::post('/room/{id}/leave', 'UserController@leave');
+
 Route::post('/users','UserController@search');
 
 Route::post('/room/{id}','CommentController@store');
 
 Route::get('/users/{user}', 'UserController@show')->where('id','[0-9]+');
 Route::get('/users', 'UserController@index');
+Route::post('/users/{user}/follow', 'UserController@follow');
+Route::post('/users/{user}/unfollow','UserController@unfollow');

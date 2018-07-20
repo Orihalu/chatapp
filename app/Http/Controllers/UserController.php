@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\User;
 use App\Comment;
+use App\Relationship;
 use Auth;
 
 
@@ -63,7 +64,8 @@ class UserController extends Controller
       $room = Room::find($id);
       $room_id = $id;
       $user->rooms()->detach($room_id);
-      return redirect()->back()->with('status','leave the group');
+
+      return redirect()->back()->with('danger','leave the group');
     }
 
     /**
@@ -128,5 +130,29 @@ class UserController extends Controller
         'users' => $users,
         'keyword' => $keyword,
       ]);
+    }
+
+
+    public function follow(User $user) {
+      // dd($user->users);
+      $followed_user = User::find($user->id);
+      $follow_user = Auth::user();
+      if(! $user) {
+        return redirect()->back()->with('error','User doesn not exist');
+      }
+// dd($follow_user->relationships());
+      $follow_user->following()->attach($followed_user->id);
+
+      return redirect()->back()->with('status','followshitayo');
+    }
+
+    public function unfollow (User $user) {
+      $followed_user = User::find($user->id);
+      $follow_user = Auth::user();
+      if(! $user) {
+        return redirect()->back()->with('status','unfollow');
+      }
+      $follow_user->following()->detach($followed_user->id);
+      return redirect()->back()->with('danger','unfollllowsitayo');
     }
 }
