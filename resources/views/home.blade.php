@@ -25,7 +25,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                  <ul class="nav nav-tabs">
+                  <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
                       <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
                     </li>

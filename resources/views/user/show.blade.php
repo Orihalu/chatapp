@@ -16,7 +16,7 @@
 <a href="{{ url('/home')}}" class="row justify-content-center">TOPPAGE</a>
 <div class="card">
 <!-- tab -->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs nav-justified">
   <li class="nav-item">
     <a href="#tab"  class="nav-link" data-toggle="tab">follow users![{{$user->following->count()}}]</a>
   </li>
