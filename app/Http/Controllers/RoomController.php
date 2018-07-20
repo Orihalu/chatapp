@@ -93,4 +93,8 @@ class RoomController extends Controller
       // dd($rooms);
 
     }
+
+    public function __construct() {
+      $this->middleware('auth');
+    }
 }

@@ -31,4 +31,7 @@ class CommentController extends Controller
 
       // dd($comment);
     }
+    public function __construct() {
+      $this->middleware('auth');
+    }
 }

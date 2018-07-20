@@ -12,13 +12,27 @@
 
 
 <div class="container">
+  @if (session('status'))
+      <div class="alert alert-success" role="alert">
+          {{ session('status') }}
+      </div>
+  @elseif (session('danger'))
+      <div class="alert alert-danger" role="alert">
+          {{ session('danger') }}
+      </div>
+  @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                  <a href="{{ url('/rooms') }}">Rooms</a>
-                  <a href="{{ url('/users') }}">Users</a>
-                  <p>Dashboard</p>
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="{{ url('/users') }}" class="nav-link">Users</a>
+                    </li>
+                  </ul>
                 </div>
 
                 <div class="card-body">
@@ -43,6 +57,7 @@
                        <div class="form-group">
                            <button type="submit" style="float:right;" class="btn btn-danger btn-lg">leave</button>
                        </div>
+                     </form>
                   </div>
                 </div>
                 @endif

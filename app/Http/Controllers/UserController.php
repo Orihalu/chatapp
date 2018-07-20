@@ -155,4 +155,7 @@ class UserController extends Controller
       $follow_user->following()->detach($followed_user->id);
       return redirect()->back()->with('danger','unfollllowsitayo');
     }
+    public function __construct() {
+      $this->middleware('auth');
+    }
 }

@@ -2,8 +2,8 @@
 
 @section('content')
 
-
 <div class="container">
+  <a href="{{ url('/home')}}" class="row justify-content-center">TOPPAGE</a>
   @if (session('status'))
       <div class="alert alert-success" role="alert">
           {{ session('status') }}
@@ -21,6 +21,8 @@
             <button class="btn btn-success">検索</button>
           </form>
           @forelse ($users as $user)
+          {{$user->comments}}
+
               @if($user->id == Auth::user()->id)
               @continue
 

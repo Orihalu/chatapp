@@ -5,6 +5,7 @@
 
 
 <div class="container">
+  <a href="{{ url('/home')}}" class="row justify-content-center">TOPPAGE</a>
   @if (session('status'))
       <div class="alert alert-success" role="alert">
           {{ session('status') }}
@@ -53,6 +54,7 @@
                              <div class="form-group">
                                  <button type="submit" style="float:right;" class="btn btn-danger btn-lg">leave</button>
                              </div>
+                           </form>
                          @else
 
                              <form method="post" action="{{ action('UserController@join',$room) }}">
