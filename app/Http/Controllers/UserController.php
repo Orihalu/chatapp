@@ -155,6 +155,23 @@ class UserController extends Controller
       $follow_user->following()->detach($followed_user->id);
       return redirect()->back()->with('danger','unfollllowsitayo');
     }
+
+    public function like(Comment $id) {
+      $user = Auth::user();
+      $comment = Comment::find($id);
+      $comment_id = $id->id;
+      $user->favorites()->attach($comment_id);
+      return redirect()->back();
+    }
+    public function unlike(Comment $id) {
+      $user = Auth::user();
+      $comment = Comment::find($id);
+      $comment_id = $id->id;
+      $user->favorites()->detach($comment_id);
+      return redirect()->back();
+    }
+
+
     public function __construct() {
       $this->middleware('auth');
     }

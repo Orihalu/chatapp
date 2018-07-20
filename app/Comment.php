@@ -17,4 +17,7 @@ class Comment extends Model
     public function room() {
       return $this->belongsTo('App\Room');
     }
+    public function favorites() {
+      return $this->belongsToMany('App\User','favorites','comment_id','user_id');
+    }
 }

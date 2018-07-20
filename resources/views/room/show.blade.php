@@ -14,7 +14,7 @@
 <h2>
   @foreach ($room->comments as $comment)
       <div class="media-left" style="margin-top:10px">
-        <a href="#">
+        <a href="{{ action('UserController@show',$comment->user)}}">
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
           <p>{{$comment->user->name}}</p>
         </a>
@@ -23,6 +23,25 @@
 
   <div class="card" style="margin-top:10px">
   <p>{{ $comment->body }}</p>
+  {{$comment->favorites}}
+  @if($comment->favorites->contains('id',Auth::user()->id))
+  <form method="post" action="{{ action('UserController@unlike',$comment) }}">
+    {{ csrf_field() }}
+    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+    <div class="form-group">
+        <button type="submit" style="float:center;" class="btn btn-danger">UNLIKE</button>
+    </div>
+    </form>
+
+  @else
+  <form method="post" action="{{ action('UserController@like',$comment) }}">
+    {{ csrf_field() }}
+    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+    <div class="form-group">
+        <button type="submit" style="float:center;" class="btn btn-success">LIKE</button>
+    </div>
+    </form>
+    @endif
   <p><small class="float-right">{{ date("Y年 m月 d日 H時 i分 s秒", strtotime($comment->created_at)) }}</small></p>
   </div>
   @endforeach
