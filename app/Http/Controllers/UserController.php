@@ -78,8 +78,17 @@ class UserController extends Controller
     {
       // dd($id);
       $user = User::findOrFail($id);
-      // dd($user);
+      // dd(Auth::user()->id);
+
+
+      if ($user->id==Auth::user()->id) {
+        // dd(Auth::user()->id);
+
+          return view('user.profil')->with('user',$user);
+        }
+      else{
         return view('user.show')->with('user', $user);
+      }
     }
 
     /**

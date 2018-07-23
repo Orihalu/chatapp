@@ -38,6 +38,7 @@ Route::post('/users','UserController@search');
 
 Route::post('/room/{id}','CommentController@store');
 
+// Route::get('users/{user}/profil','UserController@show');
 Route::get('/users/{user}', 'UserController@show')->where('id','[0-9]+');
 Route::get('/users', 'UserController@index');
 Route::post('/users/{user}/follow', 'UserController@follow');
