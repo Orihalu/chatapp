@@ -44,7 +44,7 @@
   <p>{{ $comment->body }}</p>
   {{$comment->favorites}}
   @if($comment->favorites->contains('id',Auth::user()->id))
-  <form method="post" action="{{ action('UserController@unlike',$comment) }}">
+  　<form method="post" action="{{ action('UserController@unlike',$comment) }}">
     {{ csrf_field() }}
     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
     <div class="form-group">
