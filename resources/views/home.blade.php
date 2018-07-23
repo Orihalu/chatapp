@@ -21,8 +21,8 @@
           {{ session('danger') }}
       </div>
   @endif
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    {{--<div class="row justify-content-center">
+        <div class="col-md-8">--}}
             <div class="card">
                 <div class="card-header">
                   <ul class="nav nav-tabs nav-justified">
@@ -35,7 +35,7 @@
                   </ul>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body" style="text-align:center;">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -68,8 +68,8 @@
                 </div>
               </div>
               @endforelse
-            </div>
-        </div>
+          {{--</div>
+        </div>--}}
     </div>
 </div>
 @endsection

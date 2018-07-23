@@ -2,6 +2,15 @@
 @section('content')
 {{--{{dd($room)}}--}}
 <div class="container" >
+  @if (session('status'))
+      <div class="alert alert-success" role="alert">
+          {{ session('status') }}
+      </div>
+  @elseif (session('danger'))
+      <div class="alert alert-danger" role="alert">
+          {{ session('danger') }}
+      </div>
+  @endif
   <div class="card-header">
     <ul class="nav nav-tabs nav-justified">
       <li class="nav-item">
@@ -29,10 +38,9 @@
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
           <p>{{$comment->user->name}}</p>
         </a>
-      </div>
 
 
-  <div class="card" style="margin-top:10px">
+  <div class="card" style="margin-top:10px;">
   <p>{{ $comment->body }}</p>
   {{$comment->favorites}}
   @if($comment->favorites->contains('id',Auth::user()->id))
@@ -55,9 +63,11 @@
     @endif
   <p><small class="float-right">{{ date("Y年 m月 d日 H時 i分 s秒", strtotime($comment->created_at)) }}</small></p>
   </div>
+  </div>
   @endforeach
 
 </h2>
+
 
 
      <div class="panel-footer" style="margin-top:10px">

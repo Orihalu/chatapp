@@ -6,18 +6,20 @@
 
 <div class="container">
   <a href="{{ url('/home')}}" class="row justify-content-center">TOPPAGE</a>
-  @if (session('status'))
-      <div class="alert alert-success" role="alert">
-          {{ session('status') }}
-      </div>
-  @elseif (session('danger'))
-      <div class="alert alert-danger" role="alert">
-          {{ session('danger') }}
-      </div>
-  @endif
-    <div class="row justify-content-center">
 
-        <div class="col-md-8">
+  {{-- <div class="row justify-content-center">
+
+
+        <div class="col-md-8">--}}
+          @if (session('status'))
+              <div class="alert alert-success" role="alert">
+                  {{ session('status') }}
+              </div>
+          @elseif (session('danger'))
+              <div class="alert alert-danger" role="alert">
+                  {{ session('danger') }}
+              </div>
+          @endif
 
           <div class="card-header">
             <ul class="nav nav-tabs nav-justified">
@@ -92,8 +94,8 @@
                 </div>
                 @endforelse
               </div>
-          </div>
-      </div>
+          {{--</div>
+      </div>--}}
   </div>
 
 

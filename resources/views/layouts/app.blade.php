@@ -64,6 +64,13 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    <a class="dropdown-item" href="{{ action('UserController@show', Auth::user()->id) }}"
+                                      >{{Auth::user()->name}}</a>
+                                      <form id="user-form" method="post" style="display: none;" name="user_id" value="{{Auth::user()->id}}">
+                                        @csrf
+                                      </form>
+
+
                                 </div>
                             </li>
                         @endguest

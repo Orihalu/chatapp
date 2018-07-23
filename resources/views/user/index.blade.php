@@ -13,8 +13,8 @@
           {{ session('danger') }}
       </div>
   @endif
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+  {{--  <div class="row justify-content-center">
+        <div class="col-md-8">--}}
 
           <div class="card-header">
             <ul class="nav nav-tabs nav-justified">
@@ -64,7 +64,7 @@
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                       <div class="form-group">
-                        <button type="submit" style="float:right;" class="btn btn-success">follow</button>
+                        <button type="submit" style="float:right;" class="btn btn-primary">follow</button>
                       </div>
                     </form>
                 </div>
@@ -80,7 +80,7 @@
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                       <div class="form-group">
-                        <button type="submit" style="float:right;" class="btn btn-success">follow</button>
+                        <button type="submit" style="float:right;" class="btn btn-primary">follow</button>
                       </div>
                     </form>
                 </div>
@@ -94,8 +94,8 @@
             </div>
           </div>
           @endforelse
-        </div>
-    </div>
+        {{--</div>
+    </div>--}}
 </div>
 
 

@@ -115,32 +115,45 @@
               <a href="{{ action('UserController@show', $followers)}}">{{$followers->name}}</a>
               {{ csrf_field() }}
               <div style="float:right;">you followed</div>
-            </div>
-          </div>
+                </div>
+              </div>
 
-              @break
+              @continue
 
               @elseif(Auth::user()->following->contains($followers))
               <div class="card">
                 <div class="card-body">
-              <a href="{{ action('UserController@show', $followers)}}">{{$followers->name}}</a>
-              {{ csrf_field() }}
-              <form method="post" action="{{ action('UserController@unfollow',$following) }}">
-                {{ csrf_field() }}
-                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                <div class="form-group">
-                  <button type="submit" style="float:right;" class="btn btn-danger">unfollow</button>
+                  <a href="{{ action('UserController@show', $followers)}}">{{$followers->name}}</a>
+                  {{ csrf_field() }}
+                  <form method="post" action="{{ action('UserController@unfollow',$following) }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <div class="form-group">
+                      <button type="submit" style="float:right;" class="btn btn-danger">unfollow</button>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-            </div>
-
+              </div>
+              @else
+              <div class="card">
+                <div class="card-body">
+                  <a href="{{ action('UserController@show', $followers)}}">{{$followers->name}}</a>
+                  {{ csrf_field() }}
+                  <form method="post" action="{{ action('UserController@follow',$following) }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <div class="form-group">
+                      <button type="submit" style="float:right;" class="btn btn-primary">follow</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
               @endif
 
             @empty
             <div class="card">
               <div class="card-body">
-            Nothing to show...
+                  Nothing to show...
               </div>
             </div>
             @endforelse
