@@ -47,10 +47,13 @@
           {{ csrf_field() }}
           <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
           <div class="form-group">
-            <button type="submit" style="float:right;" class="btn btn-success">follow</button>
+            <button type="submit" style="float:right;" class="btn btn-primary">follow</button>
           </div>
         </form>
         @endif
+        @can('system-only')
+        <a href="{{ action('AdminController@edit',$user) }}"  style="float:right; margin-right:10px;" class="btn btn-success">[Edit]</a>
+        @endcan
       </div>
     </div>
 
@@ -89,7 +92,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                       <div class="form-group">
-                        <button type="submit" style="float:right;" class="btn btn-success">follow</button>
+                        <button type="submit" style="float:right;" class="btn btn-primary">follow</button>
                       </div>
                       </form>
                     </div>

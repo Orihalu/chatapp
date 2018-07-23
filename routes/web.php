@@ -43,3 +43,7 @@ Route::get('/users/{user}', 'UserController@show')->where('id','[0-9]+')->name('
 Route::get('/users', 'UserController@index');
 Route::post('/users/{user}/follow', 'UserController@follow');
 Route::post('/users/{user}/unfollow','UserController@unfollow');
+
+Route::get('/admin/index','AdminController@index');
+Route::get('admin/users','AdminController@showUsers');
+Route::get('admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');

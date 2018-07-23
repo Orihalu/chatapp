@@ -32,6 +32,11 @@
                     <li class="nav-item">
                       <a  href="{{ url('/users') }}" class="nav-link">Users</a>
                     </li>
+                    @can('system-only')
+                    <li class="nav-item">
+                      <a href="{{ url('admin/index') }}" class="nav-link">Admin Menu</a>
+                    </li>
+                    @endcan
                   </ul>
                 </div>
 
