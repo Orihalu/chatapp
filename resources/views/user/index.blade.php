@@ -15,6 +15,19 @@
   @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+          <div class="card-header">
+            <ul class="nav nav-tabs nav-justified">
+              <li class="nav-item">
+                <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a  href="{{ url('/users') }}" class="nav-link">Users</a>
+              </li>
+            </ul>
+          </div>
+
+
           <form method="post">
             {{ csrf_field() }}
             <input type="text" name="name"  placeholder="user検索">

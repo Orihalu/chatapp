@@ -2,6 +2,17 @@
 @section('content')
 {{--{{dd($room)}}--}}
 <div class="container" >
+  <div class="card-header">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item">
+        <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
+      </li>
+      <li class="nav-item">
+        <a  href="{{ url('/users') }}" class="nav-link">Users</a>
+      </li>
+    </ul>
+  </div>
+
   <h1>{{$room->name}}</h1>
   <?php $aa = $room->users->toArray();
   $bb = $room->toArray();

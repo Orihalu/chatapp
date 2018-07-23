@@ -18,6 +18,19 @@
     <div class="row justify-content-center">
 
         <div class="col-md-8">
+
+          <div class="card-header">
+            <ul class="nav nav-tabs nav-justified">
+              <li class="nav-item">
+                <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a  href="{{ url('/users') }}" class="nav-link">Users</a>
+              </li>
+            </ul>
+          </div>
+
+
           {{--検索--}}
           <form method="post" >
             {{ csrf_field() }}
