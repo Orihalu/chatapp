@@ -21,4 +21,12 @@ class AdminController extends Controller
         // dd($user);
         return view('admin.edit')->with('user',$user);
     }
+
+    public function update(Request $request,User $user) {
+      // dd($request->name);
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->save();
+      return redirect('/admin/users');
+    }
 }

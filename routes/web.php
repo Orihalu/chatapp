@@ -45,5 +45,6 @@ Route::post('/users/{user}/follow', 'UserController@follow');
 Route::post('/users/{user}/unfollow','UserController@unfollow');
 
 Route::get('/admin/index','AdminController@index');
-Route::get('admin/users','AdminController@showUsers');
-Route::get('admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');
+Route::get('/admin/users','AdminController@showUsers');
+Route::get('/admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');
+Route::patch('/users/{user}','AdminController@update');
