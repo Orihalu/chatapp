@@ -51,9 +51,19 @@
           </div>
         </form>
         @endif
+
+
         @can('system-only')
-        <a href="{{ action('AdminController@edit',$user) }}"  style="float:right; margin-right:10px;" class="btn btn-success">[Edit]</a>
+        <div id="app">
+          <button id="show-modal" @click="showModal = true" class="btn btn-primary">Edit</button>
+          <modal v-if="showModal" @close="showModal = false">
+            <h3 slot="header">User Edit</h3>
+          </modal>
+        </div>
+        {{--<a href="{{ action('AdminController@edit',$user) }}"  style="float:right; margin-right:10px;" class="btn btn-success">[Edit]</a>--}}
         @endcan
+
+
       </div>
     </div>
 
@@ -197,5 +207,61 @@
       </div>
   　</div>
 </div>
+
+@endsection
+
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              UserName
+              <input type="text" name="name" placeholder="Enter Name" value="{{old('name', $user->name)}}" class="form-control">
+            </slot>
+            <slot name="body">
+              Email
+              <input type="text" name="email" placeholder="Enter Email" value="{{old('email', $user->email)}}" class="form-control">
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <button class="modal-default-button btn btn-primary" @click="$emit('close')">
+                キャンセル
+              </button>
+              <button type="submit" class="modal-default-button btn btn-success" action="{{ action('AdminController@update',$user) }}">
+                編集
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+
+@section('scripts')
+<script>
+Vue.component('modal', {
+  template:'#modal-template'
+});
+
+const vm = new Vue({
+  el: '#app',
+  data: {
+    showModal: false,
+  },
+});
+</script>
 
 @endsection
