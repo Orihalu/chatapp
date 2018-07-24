@@ -210,6 +210,8 @@
 
 @endsection
 
+
+{{--modal部分--}}
 <script type="text/x-template" id="modal-template">
   <transition name="modal">
     <div class="modal-mask">
@@ -252,16 +254,16 @@
 
 @section('scripts')
 <script>
-Vue.component('modal', {
-  template:'#modal-template'
-});
+  Vue.component('modal', {
+    template:'#modal-template'
+  });
 
-const vm = new Vue({
-  el: '#app',
-  data: {
-    showModal: false,
-  },
-});
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      showModal: false,
+    },
+  });
 </script>
 
 @endsection
