@@ -21,17 +21,11 @@
       </li>
     </ul>
   </div>
-
+<div class="container" style="text-align:center;">
   <h1>{{$room->name}}</h1>
-  <?php $aa = $room->users->toArray();
-  $bb = $room->toArray();
-
-   ?>
-  {{--dd(in_array($aa, $bb))--}}
-
-{{--dd($room->users)--}}
-{{--
-<h1>commentbody</h1>
+</div>
+  {{--
+  <h1>commentbody</h1>
 <h2>
   @foreach ($room->comments as $comment)
       <div class="media-left" style="margin-top:10px">
@@ -69,6 +63,7 @@
   @endforeach
 --}}
 
+</h2>
 
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
@@ -86,16 +81,12 @@
     </div>
 
 
-</h2>
-
-
-
      <div class="panel-footer" style="margin-top:10px">
         <form method="post" action="{{ action('CommentController@store' , $room)}}">
           {{ csrf_field() }}
 
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
-          <button class="btn btn-success" style="margin-top:10px">Comment</button>
+          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment">Comment</button>
         </form>
      </div>
 </div>
