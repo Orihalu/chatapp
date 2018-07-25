@@ -13,7 +13,7 @@ class CommentController extends Controller
 
     public function index(Room $id) {
       // dd($id);
-      return response()->json($id->comments()->with('user')->latest()->get());
+      return response()->json($id->comments()->with('user','favorites')->latest()->get());
     }
 
     public function store(Request $request,Room $id) {
@@ -37,23 +37,10 @@ class CommentController extends Controller
 
       return $comment->toJson();
 
-// web.php
-      // $comment->save();
-      // return redirect()->action('RoomController@show',$id);
-
-
-      // dd($id);
-      // $room = new Room($id);
-      // dd($room);
-      // $comment = $room->comments()->create([
-      //   'body' => $request->body,
-      //   'user_id' => Auth::id(),
-      //   'room_id' => $id->id
-      // ]);
-
-      // dd($comment);
     }
     // public function __construct() {
     //   $this->middleware('auth');
     // }
+
+
 }

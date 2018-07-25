@@ -258,7 +258,7 @@
     template:'#modal-template'
   });
 
-  const vm = new Vue({
+  const app = new Vue({
     el: '#app',
     data: {
       showModal: false,

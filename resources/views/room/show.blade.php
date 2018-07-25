@@ -65,12 +65,18 @@
 
 </h2>
 
+{{--<pre>@{{$data}}</pre>--}}
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
         </a>
       </div>
+
+
+<p>@{{comment.favorites}}</p>
+
+
       <div class="media-body">
         <h4 class="media-heading">@{{comment.user.name}} said...</h4>
         <p>
