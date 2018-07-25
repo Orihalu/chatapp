@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/rooms', 'RoomController@index');
 Route::post('/rooms', 'RoomController@search');
 
-Route::get('/room/{id}', 'RoomController@show')->where('id','[0-9]+');
+Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
 Route::get('/room/create', 'RoomController@create');
 Route::post('/room/store', 'RoomController@store');
 Route::delete('/room/{id}', 'CommentController@destroy');
@@ -36,7 +36,7 @@ Route::post('/room/{id}/leave', 'UserController@leave');
 
 Route::post('/users','UserController@search');
 
-Route::post('/room/{id}','CommentController@store');
+// Route::post('/room/{id}','CommentController@store');
 
 // Route::get('users/{user}/profil','UserController@show');
 Route::get('/users/{user}', 'UserController@show')->where('id','[0-9]+')->name('user');

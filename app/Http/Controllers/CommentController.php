@@ -12,6 +12,7 @@ class CommentController extends Controller
 
 
     public function index(Room $id) {
+      // dd($id);
       return response()->json($id->comments()->with('user')->latest()->get());
     }
 
@@ -52,7 +53,7 @@ class CommentController extends Controller
 
       // dd($comment);
     }
-    public function __construct() {
-      $this->middleware('auth');
-    }
+    // public function __construct() {
+    //   $this->middleware('auth');
+    // }
 }

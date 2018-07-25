@@ -68,7 +68,7 @@
 
   @endforeach
 --}}
-{{dd($comments)}}
+
 
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
@@ -108,43 +108,42 @@
 <script>
 
 const app = new Vue({
-  el: '#app',
-  data: {
-    comments: {},
-    commentBox: '',
-    room: {!! $room->toJson() !!},
-    user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
-  },
-  mounted() {
-    this.getComments();
-  },
-  methods: {
-    getComments() {
-      axios.get('/api/room/'+this.room.id+'/comments')
-      .then((response) => {
-        this.comments = response.data
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    },
-    postComment() {
-      axios.post('/api/room/'+this.room.id+'/comment', {
-        api_token: this.user.api_token,
-        body: this.commentBox
-      })
-      .then((response) => {
-        this.comments.unshift(response.data);
-        this.commentBox = '';
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    }
-  }
-})
-
-
+      el: '#app',
+      data: {
+        comments: {},
+        commentBox: '',
+        room: {!! $room->toJson() !!},
+        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+      },
+      mounted() {
+        this.getComments();
+      },
+      methods: {
+        getComments() {
+          axios.get('/api/room/'+this.room.id+'/comments', {
+            api_token: this.user.api_token
+          })
+                .then((response) => {
+                  this.comments = response.data
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+        },
+        postComment() {
+          axios.post('/api/room/'+this.room.id+'/comment', {
+            api_token: this.user.api_token,
+            body: this.commentBox
+          })
+          .then((response) => {
+            this.comments.unshift(response.data);
+            this.commentBox = '';
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        },
+      }
+    })
 </script>
 @endsection

@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('room/{id}/comments','CommentController@index')->where('id','[0-9]+');
 
-Route::get('room/{room}/comments','CommentController@index');
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('room/{room}/comment', 'CommentController@store');
+    Route::post('room/{id}/comment', 'CommentController@store')->where('id','[0-9]+');
 });
