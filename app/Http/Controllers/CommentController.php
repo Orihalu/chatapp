@@ -12,8 +12,21 @@ class CommentController extends Controller
 
 
     public function index(Room $id) {
-      // dd($id);
-      return response()->json($id->comments()->with('user','favorites')->latest()->get());
+      // var_dump($id);
+      $user = Auth::user();
+
+      $comments = $id->comments();
+      foreach ($comments as $comment) {
+      //attributeで出来た項目にisfavoritecommetsの結果を入れる
+      $comment = $user->isFavoritesComment($comment->id);
+      }
+// exit;
+      return response()->json([
+        'comment' => $id->comments()->with('user','favorites')->latest()->get(),
+        // 'favorite' => $user->favoriteComments(),
+
+      ]);
+      // return $id->comments()->with('user','favorites')->latest()->get()->toJson();
     }
 
     public function store(Request $request,Room $id) {

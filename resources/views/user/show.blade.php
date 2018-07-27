@@ -117,6 +117,8 @@
             @endforelse
       </div>
 
+
+
     　<div id="tab2" class="tab-pane">
             @forelse($user->followers as $followers)
 {{--dd($followers)--}}
@@ -227,11 +229,11 @@
           <div class="modal-body">
             <slot name="body">
               UserName
-              <input type="text" name="name" placeholder="Enter Name" value="{{old('name', $user->name)}}" class="form-control">
+              <input type="text" name="name" placeholder="Enter Name" value="{{old('name', $user->name)}}" class="form-control" v-model="name">
             </slot>
             <slot name="body">
               Email
-              <input type="text" name="email" placeholder="Enter Email" value="{{old('email', $user->email)}}" class="form-control">
+              <input type="text" name="email" placeholder="Enter Email" value="{{old('email', $user->email)}}" class="form-control" v-model="email">
             </slot>
           </div>
 
@@ -240,7 +242,7 @@
               <button class="modal-default-button btn btn-primary" @click="$emit('close')">
                 キャンセル
               </button>
-              <button type="submit" class="modal-default-button btn btn-success" action="{{ action('AdminController@update',$user) }}">
+              <button type="submit" class="modal-default-button btn btn-success" @click="editUser">
                 編集
               </button>
             </slot>
@@ -249,6 +251,36 @@
       </div>
     </div>
   </transition>
+</script>
+
+@section('scripts')
+
+<script>
+export default {
+  props:["user"],
+  data: function(){
+    return{
+      name:this.user.name,
+      email:this.user.email,
+      request:{
+        name:'',
+        email:''
+      }
+    }
+  },
+  methods: {
+    sendName() {
+      if(this.name){
+        this.request.name = this.name;
+        this.$emit("namesent", {
+          id:this.user.id,
+          email:this.user.email,
+          request:this.request
+        });
+      }
+    }
+  }
+}
 </script>
 
 
@@ -263,6 +295,19 @@
     data: {
       showModal: false,
     },
+    methods: {
+      editUser: function() {
+        this.request.name = this.name;
+        this.request.email = this.email;
+          axios.patch('/users/'+this.user.id+'/update')
+          .then((response) => {
+            this.user = response.data
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      }
+    }
   });
 </script>
 

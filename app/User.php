@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Auth;
 
 
 class User extends Authenticatable
@@ -52,8 +55,13 @@ class User extends Authenticatable
       return $this->belongsToMany('App\User','relationships','follower_id', 'follow_id');
     }
 
-    public function favorites() {
+    public function favoriteComments() {
       return $this->belongsToMany('App\Comment','favorites','user_id','comment_id');
+    }
+    public function isFavoritesComment($comment_id) {
+
+      $check = $this->favoriteComments->pluck('id');
+      return $check->contains($comment_id);
     }
 
 

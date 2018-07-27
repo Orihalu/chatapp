@@ -1,6 +1,5 @@
 @extends ('layouts.app')
 @section('content')
-{{--{{dd($room)}}--}}
 <div class="container" >
   @if (session('status'))
       <div class="alert alert-success" role="alert">
@@ -43,7 +42,7 @@
     {{ csrf_field() }}
     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
     <div class="form-group">
-        <button type="submit" style="float:center;" class="btn btn-danger">UNLIKE</button>
+        <button type="submit" style="float:center;" class="btn btn-danger">kaijo</button>
     </div>
     </form>
 
@@ -65,7 +64,7 @@
 
 </h2>
 
-{{--<pre>@{{$data}}</pre>--}}
+<div id="comment">
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
@@ -73,15 +72,22 @@
         </a>
       </div>
 
-
-<p>@{{comment.favorites}}</p>
-
-
       <div class="media-body">
         <h4 class="media-heading">@{{comment.user.name}} said...</h4>
         <p>
           @{{comment.body}}
         </p>
+
+
+
+        <div class="card" v-for="favorite in comment.favorites">
+          <div class="card-body">
+            <button style="float:center;" class="btn btn-primary">
+              @{{favorite.id}}
+            </button>
+          </div>
+        </div>
+
         <span style="color: #aaa;">on @{{comment.created_at}}</span>
       </div>
     </div>
@@ -96,6 +102,8 @@
         </form>
      </div>
 </div>
+</div>
+
 
 
 
@@ -105,12 +113,13 @@
 <script>
 
 const app = new Vue({
-      el: '#app',
+      el: '#comment',
       data: {
         comments: {},
         commentBox: '',
         room: {!! $room->toJson() !!},
-        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
+        favorites: {!! Auth::user()->favoriteComments !!},
       },
       mounted() {
         this.getComments();
@@ -121,7 +130,8 @@ const app = new Vue({
             api_token: this.user.api_token
           })
                 .then((response) => {
-                  this.comments = response.data
+                  this.comments = response.data.comment;
+                  // this.favorites = response.data.favorite;
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -140,6 +150,7 @@ const app = new Vue({
             console.log(error);
           });
         },
+
       }
     })
 </script>

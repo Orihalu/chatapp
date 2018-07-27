@@ -22,8 +22,14 @@ class RoomController extends Controller
 
 
     public function show($id) {
-
+// dd(Auth::user()->isFavoritesComment(2));
       $room = Room::findOrFail($id);
+      foreach ($room->comments as $comment) {
+        $comment = $comment->user->isFavoritesComment($comment->id);
+      }
+      // dd($comment);
+      //
+      // dd($room->comments);
       if($room->users->contains('id',Auth::user()->id)) {
         return view('room.show')->withRoom($room);
       }

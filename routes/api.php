@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 Route::get('room/{id}/comments','CommentController@index')->where('id','[0-9]+');
 
+Route::patch('/users/{user}/update','AdminController@update');
 
 Route::middleware('auth:api')->group(function () {
     Route::post('room/{id}/comment', 'CommentController@store')->where('id','[0-9]+');

@@ -7,8 +7,8 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-Vue.config.devtools = true;
+// window.Vue = require('vue');
+// Vue.config.devtools = true;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
