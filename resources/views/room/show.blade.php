@@ -71,24 +71,18 @@
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
         </a>
       </div>
-
+      <div class="card container">
       <div class="media-body">
         <h4 class="media-heading">@{{comment.user.name}} said...</h4>
         <p>
           @{{comment.body}}
         </p>
-
-
-
-        <div class="card" v-for="favorite in comment.favorites">
-          <div class="card-body">
-            <button style="float:center;" class="btn btn-primary">
-              @{{favorite.id}}
-            </button>
-          </div>
-        </div>
-
-        <span style="color: #aaa;">on @{{comment.created_at}}</span>
+{{--like button--}}
+        <p class="likeBtn">
+        <i class="fa fa-thumbs-up" @click.prevent="likeComment(comment.id)" >Like</i>
+        <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
+        </p>
+      </div>
       </div>
     </div>
 
@@ -119,10 +113,12 @@ const app = new Vue({
         commentBox: '',
         room: {!! $room->toJson() !!},
         user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
-        favorites: {!! Auth::user()->favoriteComments !!},
+        favorites: {},
+        isOpen: false,
       },
       mounted() {
         this.getComments();
+        // this.getLikeComments();
       },
       methods: {
         getComments() {
@@ -131,7 +127,7 @@ const app = new Vue({
           })
                 .then((response) => {
                   this.comments = response.data.comment;
-                  // this.favorites = response.data.favorite;
+                  this.favorites = response.data.favorite;
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -146,10 +142,31 @@ const app = new Vue({
             this.comments.unshift(response.data);
             this.commentBox = '';
           })
+
           .catch((error) => {
             console.log(error);
           });
         },
+        count: function() {
+          this.count++;
+        },
+        likeComment(id) {
+        axios.post('/api/comment/'+id+'/likes', {
+          api_token: this.user.api_token
+        })
+        },
+        getLikeComments() {
+          axios.get('/api/room/'+this.room.id+'/user/like')
+          .then((response) => {
+            this.favorites = response.data.like;
+            api_token: this.user.api_token;
+          })
+          .catch(function (error) {
+            alert('alert');
+            console.log(error.response);
+          });
+        }
+
 
       }
     })
