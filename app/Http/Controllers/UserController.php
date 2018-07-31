@@ -191,8 +191,8 @@ class UserController extends Controller
       $user = Auth::user();
       $comment = Comment::find($id);
       $comment_id = $id->id;
-      $user->favoriteComments()->detach($comment_id);
-      return redirect()->back();
+      $favorite = $user->favoriteComments()->detach($comment_id);
+      // return redirect()->back();
     }
 
     public function favorite(User $id) {
@@ -200,7 +200,5 @@ class UserController extends Controller
         'comment' => $id->favoriteComments()->with('favorites')->latest()->get(),
     ]);
   }
-
-
 
 }

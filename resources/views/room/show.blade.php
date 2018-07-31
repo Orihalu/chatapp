@@ -79,7 +79,8 @@
         </p>
 {{--like button--}}
         <p class="likeBtn">
-        <i class="fa fa-thumbs-up" @click.prevent="likeComment(comment.id)">Like:@{{comment.favorites.length}}</i>
+        <i class="fa fa-thumbs-up" style="color: #fc0" v-bind:class="{active:this.liked}"  v-if="this.liked" @click.prevent="likeComment(comment.id); this.liked=!this.liked">Like</i>:@{{comment.favorites.length}}
+        <i class="fa fa-thumbs-down" v-else @click.prevent="unlikeComment(comment.id); this.liked=!this.liked">Like</i>:@{{comment.favorites.length}}
         <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
         </p>
       </div>
@@ -114,7 +115,7 @@ const app = new Vue({
         room: {!! $room->toJson() !!},
         user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
         favorites: {},
-        isOpen: false,
+        test: {},
       },
       mounted() {
         this.getComments();
@@ -159,6 +160,7 @@ const app = new Vue({
           api_token: this.user.api_token
         })
         .then((response) => {
+          this.liked = true;
           console.log('dododo');
           this.getComments();
           this.getLikeComments();
@@ -179,6 +181,26 @@ const app = new Vue({
             console.log(error.message);
           });
         },
+        toggleLike(id) {
+          this.liked = !this.liked
+        },
+
+        unlikeComment(id) {
+          axios.post('/api/comment/'+id+'/unlikes',{
+            api_token:this.user.api_token
+          })
+          .then((response) => {
+            this.liked = false;
+            this.getComments();
+            console.log('bababa');
+          })
+          .catch(function(error) {
+            alert('alert');
+            console.log(error.message);
+          });
+        },
+
+
 
 
       }

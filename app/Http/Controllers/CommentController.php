@@ -53,5 +53,10 @@ class CommentController extends Controller
     //   $this->middleware('auth');
     // }
 
+    public function isFavoritesComment(Comment $id) {
+      $comment_id = $comment->id;
+      $check = Auth::user()->favoriteComments->pluck('id');
+      return $check->contains($comment_id);
+    }
 
 }
