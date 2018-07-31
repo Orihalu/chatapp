@@ -35,4 +35,9 @@ class Comment extends Model
         }
         return false;
       }
+
+      public function isFavoritedCount() {
+        $this->favorites()->count();
+      }
+
 }

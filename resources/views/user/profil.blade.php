@@ -29,7 +29,7 @@
           <a href="#tab3" class="nav-link" data-toggle="tab">Joined Rooms[{{$user->rooms->count()}}]</a>
         </li>
         <li class="nav-item">
-          <a href="#tab4" class="nav-link" data-toggle="tab">Favorite comments[{{$user->favorites->count()}}]</a>
+          <a href="#tab4" class="nav-link" data-toggle="tab">Favorite comments[{{$user->favoriteComments->count()}}]</a>
         </li>
       </ul>
     </div>
@@ -200,8 +200,8 @@
       </div>
 
       <div id="tab4" class="tab-pane">
-        @forelse($user->favorites as $favorite)
-          @if(Auth::user()->favorites->contains($favorite))
+        @forelse($user->favoriteComments as $favorite)
+          @if(Auth::user()->favoriteComments->contains($favorite))
           <div class="card">
             <div class="card-body">
               <a href="{{ action('RoomController@show', $favorite->room_id)}}">{{$favorite->body}}</a>

@@ -26,7 +26,7 @@
   {{--
   <h1>commentbody</h1>
 <h2>
-  @foreach ($room->comments as $comment)
+  @foreach ($room->comments->reverse() as $comment)
       <div class="media-left" style="margin-top:10px">
         <a href="{{ action('UserController@show',$comment->user)}}">
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
@@ -79,7 +79,7 @@
         </p>
 {{--like button--}}
         <p class="likeBtn">
-        <i class="fa fa-thumbs-up" @click.prevent="likeComment(comment.id)" >Like</i>
+        <i class="fa fa-thumbs-up" @click.prevent="likeComment(comment.id)">Like:@{{comment.favorites.length}}</i>
         <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
         </p>
       </div>
@@ -118,7 +118,9 @@ const app = new Vue({
       },
       mounted() {
         this.getComments();
-        // this.getLikeComments();
+        this.getLikeComments();
+      },
+      updated() {
       },
       methods: {
         getComments() {
@@ -126,8 +128,9 @@ const app = new Vue({
             api_token: this.user.api_token
           })
                 .then((response) => {
-                  this.comments = response.data.comment;
-                  this.favorites = response.data.favorite;
+                  this.comments = response.data.comment.reverse();
+                  this.getLikeComments();
+                  console.log(response.data.comment);
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -139,6 +142,7 @@ const app = new Vue({
             body: this.commentBox
           })
           .then((response) => {
+            this.getComments();
             this.comments.unshift(response.data);
             this.commentBox = '';
           })
@@ -147,25 +151,34 @@ const app = new Vue({
             console.log(error);
           });
         },
-        count: function() {
-          this.count++;
-        },
+
+
+
         likeComment(id) {
         axios.post('/api/comment/'+id+'/likes', {
           api_token: this.user.api_token
         })
+        .then((response) => {
+          console.log('dododo');
+          this.getComments();
+          this.getLikeComments();
+        })
+        .catch(function (error) {
+          alert('success');
+          console.log(error.message);
+        });
         },
+
         getLikeComments() {
-          axios.get('/api/room/'+this.room.id+'/user/like')
+          axios.get('/api/user/'+this.user.id+'/comments')
           .then((response) => {
-            this.favorites = response.data.like;
-            api_token: this.user.api_token;
+            this.favorites = response.data.comment;
           })
           .catch(function (error) {
             alert('alert');
-            console.log(error.response);
+            console.log(error.message);
           });
-        }
+        },
 
 
       }

@@ -177,7 +177,8 @@ class UserController extends Controller
       $comment = Comment::find($id);
       $comment_id = $id->id;
       $favorite = Auth::user()->favoriteComments()->attach($comment_id);
-      return $favorite->toJson();
+      // return redirect()->back()->with('status','success');
+      // return $favorite->toJson();
 
       // $user = Auth::user();
       // $comment = Comment::find($id);
@@ -196,7 +197,7 @@ class UserController extends Controller
 
     public function favorite(User $id) {
       return response()->json([
-        'like' => Auth::user()->favoriteComments()->latest()->get(),
+        'comment' => $id->favoriteComments()->with('favorites')->latest()->get(),
     ]);
   }
 
