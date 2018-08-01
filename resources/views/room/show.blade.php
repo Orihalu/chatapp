@@ -1,5 +1,6 @@
 @extends ('layouts.app')
 @section('content')
+<v-loading :show="show"></v-loading>
 <div class="container" >
   @if (session('status'))
       <div class="alert alert-success" role="alert">
@@ -21,6 +22,7 @@
     </ul>
   </div>
 <div class="container" style="text-align:center;">
+
   <h1>{{$room->name}}</h1>
 </div>
   {{--
@@ -64,7 +66,7 @@
 
 </h2>
 
-<div id="comment">
+<div id="app" v-cloak>
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
@@ -78,17 +80,19 @@
           @{{comment.body}}
         </p>
 {{--like button--}}
-        <p class="likeBtn">
-        <i class="fa fa-thumbs-up" style="color: #fc0" v-bind:class="{active:this.liked}"  v-if="this.liked" @click.prevent="likeComment(comment.id); this.liked=!this.liked">Like</i>:@{{comment.favorites.length}}
-        <i class="fa fa-thumbs-down" v-else @click.prevent="unlikeComment(comment.id); this.liked=!this.liked">Like</i>:@{{comment.favorites.length}}
+
+          {{--<like-button @click.native.prevent="likeComment(comment.id);" v-show="!comment.my_favorite" ></like-button>
+          <unlike-button @click.native.prevent="unlikeComment(comment.id);"　v-show="comment.my_favorite"></unlike-button>@{{comment.favorite_counter}}--}}
+          <like-button></like-button>
+          <i class="fa fa-thumbs-up">Like</i>
         <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
-        </p>
+
       </div>
       </div>
     </div>
 
 
-     <div class="panel-footer" style="margin-top:10px">
+     <div id="latest" class="panel-footer" style="margin-top:10px">
         <form method="post" action="{{ action('CommentController@store' , $room)}}">
           {{ csrf_field() }}
 
@@ -105,10 +109,43 @@
 @endsection
 
 @section('scripts')
+
 <script>
+Vue.component('v-loading', {
+        props: {
+            text: {
+                default: 'ロード中...',
+                type: String
+            },
+            show: {
+                default: false,
+                type: Boolean
+            }
+        },
+        template: '<div v-if="show"><img src="https://www.homepage-tukurikata.com/image/lion.jpg" >&nbsp;<span v-text="text"></span></div>'
+    });
+
+Vue.component('like-button', {
+  data: function() {
+    return {
+      // comments: {},
+      counter: 0,
+    }
+  },
+  template: '<i class="fa fa-thumbs-up" @click="counter += 1" style="color: #fc0">Like:@{{counter}}</i>'
+});
+Vue.component('unlike-button', {
+  data: function() {
+    return {
+      // comments: {},
+
+    }
+  },
+  template: '<i class="fa fa-thumbs-down">Like</i>'
+});
 
 const app = new Vue({
-      el: '#comment',
+      el: '#app',
       data: {
         comments: {},
         commentBox: '',
@@ -116,21 +153,24 @@ const app = new Vue({
         user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
         favorites: {},
         test: {},
+        show: false,
+        counter: 0,
+      },
+      created() {
+        this.submit();
       },
       mounted() {
         this.getComments();
-        this.getLikeComments();
+        // this.getLikeComments();
       },
       updated() {
       },
       methods: {
         getComments() {
-          axios.get('/api/room/'+this.room.id+'/comments', {
-            api_token: this.user.api_token
-          })
+          axios.get('/api/room/'+this.room.id+'/user/'+this.user.id+'/comments')
                 .then((response) => {
-                  this.comments = response.data.comment.reverse();
-                  this.getLikeComments();
+                  this.comments = response.data.reverse();
+                  // this.getLikeComments();
                   console.log(response.data.comment);
                 })
                 .catch(function (error) {
@@ -160,7 +200,6 @@ const app = new Vue({
           api_token: this.user.api_token
         })
         .then((response) => {
-          this.liked = true;
           console.log('dododo');
           this.getComments();
           this.getLikeComments();
@@ -182,7 +221,11 @@ const app = new Vue({
           });
         },
         toggleLike(id) {
-          this.liked = !this.liked
+          if(this.my_favorite=true){
+            this.unlikeComment()
+          }else{
+            this.likeComment()
+          }
         },
 
         unlikeComment(id) {
@@ -190,7 +233,7 @@ const app = new Vue({
             api_token:this.user.api_token
           })
           .then((response) => {
-            this.liked = false;
+
             this.getComments();
             console.log('bababa');
           })
@@ -200,10 +243,38 @@ const app = new Vue({
           });
         },
 
+          submit: function() {
+            var self = this;
+            this.show = true;
+            axios.get(this.room.id)
+            .then(function(response){
+              console.log('d');
+
+            })
+            .catch(function(error){
+              console.log('dd');
+            })
+            .then(function() {
+              self.show = false;
+              console.log('ddd');
+            });
+          },
+
+          checkLike(id) {
+            axios.get('/api/comments/'+id+'/status')
+            .then((res) => {
+              this.test = response.data;
+              console.log('yyy');
+            })
+            .catch(function(error) {
+              console.log(error);
+            })
+          },
 
 
 
       }
     })
 </script>
+
 @endsection

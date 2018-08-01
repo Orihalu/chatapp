@@ -26,7 +26,7 @@ class Comment extends Model
     // }
 
     public function favoriteCount() {
-      return $this->favorites;
+      return $this->favorites->count();
     }
 
       public function getIsFavoriteCommentAttribute($comment_id) {
@@ -37,7 +37,7 @@ class Comment extends Model
       }
 
       public function isFavoritedCount() {
-        $this->favorites()->count();
+        $this->favorites->count();
       }
 
 }

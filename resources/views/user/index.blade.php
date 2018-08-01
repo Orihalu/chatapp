@@ -31,7 +31,7 @@
           <form method="post">
             {{ csrf_field() }}
             <input type="text" name="name"  placeholder="user検索">
-            <button class="btn btn-success">検索</button>
+            <button class="btn btn-success"><i class="fa fa-search"></i></button>
           </form>
           @forelse ($users as $user)
           {{$user->comments}}

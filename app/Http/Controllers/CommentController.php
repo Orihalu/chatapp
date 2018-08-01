@@ -21,9 +21,29 @@ class CommentController extends Controller
       // $comment = $user->isFavoritesComment($comment->id);
       // }
 // exit;
-      return response()->json([
-        'comment' => $id->comments()->with('user','favorites')->latest()->get(),
-      ]);
+      $room_model = $id; // ややこしいので
+
+      // ユーザがfavariteしてるcomment_idの配列を取得
+      // $have_favarite_comment_ids = $room_model->join('comments', 'comments.room_id', 'rooms.id')
+      //   ->join('favarites', function ($join) {
+      //     $join->on('favorites.comment_id', '=', 'comments.id')
+      //         ->where('favarites.user_id', '=', Auth::id());
+      //   }->pluck('comments.id');
+
+        // commentを見たときに上の配列にidが含まれているかどうか
+        // CommentResource::collection($comment_model, $have_favarite_comment_ids);
+        $comment_models = $id->comments()->with('user')->latest()->get();
+        $user = User::find(3);
+        foreach($comment_models as $comment) {
+          $comment['my_favorite'] = $user->isFavoritesComment($comment->id);
+          $comment['favorite_counter'] = $comment->favoriteCount();
+        }
+        // dd($comment_models->find(4));
+
+
+      return response()->json($comment_models);
+        // 'comment' => $id->comments()->with('user','favorites')->latest()->get()
+      // ]);
       // return $id->comments()->with('user','favorites')->latest()->get()->toJson();
     }
 

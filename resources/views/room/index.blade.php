@@ -39,7 +39,7 @@
 
               <input type="text" name="name" placeholder="Roomname">
 
-            <button class="btn btn-success">検索</button>
+            <button class="btn btn-success"><i class="fa fa-search"></i></button>
           </form>
 
           {{--検索エンド--}}
