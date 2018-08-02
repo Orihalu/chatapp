@@ -1,7 +1,7 @@
 @extends ('layouts.app')
 @section('content')
 <v-loading :show="show"></v-loading>
-<div class="container" >
+<div class="container" v-cloak >
   @if (session('status'))
       <div class="alert alert-success" role="alert">
           {{ session('status') }}
@@ -11,7 +11,7 @@
           {{ session('danger') }}
       </div>
   @endif
-  <div class="card-header">
+  <div class="card-header" v-cloak>
     <ul class="nav nav-tabs nav-justified">
       <li class="nav-item">
         <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
@@ -81,10 +81,8 @@
         </p>
 {{--like button--}}
 
-          {{--<like-button @click.native.prevent="likeComment(comment.id);" v-show="!comment.my_favorite" ></like-button>
-          <unlike-button @click.native.prevent="unlikeComment(comment.id);"　v-show="comment.my_favorite"></unlike-button>@{{comment.favorite_counter}}--}}
-          <like-button></like-button>
-          <i class="fa fa-thumbs-up">Like</i>
+          <like-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite" ></like-button>
+          <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
         <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
 
       </div>
@@ -129,10 +127,22 @@ Vue.component('like-button', {
   data: function() {
     return {
       // comments: {},
-      counter: 0,
+
+      counter: {},
     }
   },
-  template: '<i class="fa fa-thumbs-up" @click="counter += 1" style="color: #fc0">Like:@{{counter}}</i>'
+  methods: {
+    toggleCounter: function(comment) {
+        if(my_favorite=true){
+          this.counter -= 1
+
+        }else {
+          this.counter +=1
+
+        }
+    },
+  },
+  template: '<i class="fa fa-heart"  @click="toggleCounter" style="color:tomato"></i>'
 });
 Vue.component('unlike-button', {
   data: function() {
@@ -141,7 +151,7 @@ Vue.component('unlike-button', {
 
     }
   },
-  template: '<i class="fa fa-thumbs-down">Like</i>'
+  template: '<i class="fa fa-heart" f004></i>'
 });
 
 const app = new Vue({
@@ -201,8 +211,8 @@ const app = new Vue({
         })
         .then((response) => {
           console.log('dododo');
-          this.getComments();
-          this.getLikeComments();
+          // this.getComments();
+          // this.getLikeComments();
         })
         .catch(function (error) {
           alert('success');
@@ -220,13 +230,13 @@ const app = new Vue({
             console.log(error.message);
           });
         },
-        toggleLike(id) {
-          if(this.my_favorite=true){
-            this.unlikeComment()
-          }else{
-            this.likeComment()
-          }
-        },
+        // toggleLike(id) {
+        //   if(comment.my_favorite=true){
+        //     this.unlikeComment(id)
+        //   }else{
+        //     this.likeComment(id)
+        //   }
+        // },
 
         unlikeComment(id) {
           axios.post('/api/comment/'+id+'/unlikes',{
@@ -234,7 +244,7 @@ const app = new Vue({
           })
           .then((response) => {
 
-            this.getComments();
+            // this.getComments();
             console.log('bababa');
           })
           .catch(function(error) {

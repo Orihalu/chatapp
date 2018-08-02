@@ -48,3 +48,6 @@ Route::get('/admin/index','AdminController@index');
 Route::get('/admin/users','AdminController@showUsers');
 Route::get('/admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');
 Route::patch('/users/{user}','AdminController@update');
+
+
+// Route::get('room/{id}/user/{user}/comments','CommentController@index')->where('id','[0-9]+');

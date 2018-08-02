@@ -10497,3 +10497,14 @@ a.text-dark:focus {
     -ms-transform: translate(-50%,-47.5%);
     transform: translate(-50%,-47.5%);
 }
+
+@keyframes cloak-in {
+  0% { opacity: 0;}
+}
+
+#app {
+  animation: cloak-in 2s;
+}
+#app[v-cloak] {
+  opacity: 0;
+}
