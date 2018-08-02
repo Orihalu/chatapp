@@ -65,7 +65,6 @@
 --}}
 
 </h2>
-
 <div id="app" v-cloak>
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
@@ -134,10 +133,10 @@ Vue.component('like-button', {
   methods: {
     toggleCounter: function(comment) {
         if(my_favorite=true){
-          this.counter -= 1
+          counter -= 1
 
         }else {
-          this.counter +=1
+          counter +=1
 
         }
     },
