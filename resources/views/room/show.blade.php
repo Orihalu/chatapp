@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 @section('content')
-<v-loading :show="show"></v-loading>
+<v-loading :show="show" v-cloak></v-loading>
 <div class="container" v-cloak >
   @if (session('status'))
       <div class="alert alert-success" role="alert">
@@ -69,12 +69,13 @@
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
-          <img class="media-object" src="http://placeimg.com/80/80" alt="...">
+          <img class="media-object" src="http://placeimg.com/60/60" alt="...">
+          <p>@{{comment.user.name}}</p>
         </a>
       </div>
       <div class="card container">
       <div class="media-body">
-        <h4 class="media-heading">@{{comment.user.name}} said...</h4>
+        <!-- <h4 class="media-heading">@{{comment.user.name}} said...</h4> -->
         <p>
           @{{comment.body}}
         </p>
@@ -89,12 +90,12 @@
     </div>
 
 
-     <div id="latest" class="panel-footer" style="margin-top:10px">
+     <div id="app" class="panel-footer" style="margin-top:10px" v-cloak>
         <form method="post" action="{{ action('CommentController@store' , $room)}}">
           {{ csrf_field() }}
 
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
-          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment">Comment</button>
+          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!show">Comment</button>
         </form>
      </div>
 </div>
@@ -111,7 +112,7 @@
 Vue.component('v-loading', {
         props: {
             text: {
-                default: 'ロード中...',
+                default: 'Now Loading...',
                 type: String
             },
             show: {
@@ -161,7 +162,6 @@ const app = new Vue({
         room: {!! $room->toJson() !!},
         user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
         favorites: {},
-        test: {},
         show: false,
         counter: 0,
       },

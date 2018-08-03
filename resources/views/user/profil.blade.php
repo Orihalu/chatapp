@@ -3,6 +3,8 @@
 @section('content')
 
 {{--dd($user->favorites)--}}
+<v-loading v-show="show"></v-loading>
+<like-button></like-button>
 
 <div class="container">
       @if (session('status'))
@@ -200,7 +202,7 @@
       </div>
 
       <div id="tab4" class="tab-pane">
-        @forelse($user->favoriteComments as $favorite)
+        {{--@forelse($user->favoriteComments as $favorite)
           @if(Auth::user()->favoriteComments->contains($favorite))
           <div class="card">
             <div class="card-body">
@@ -210,6 +212,9 @@
                 {{ csrf_field() }}
               <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
               <div class="form-group">
+                <like-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite"   ></like-button>
+                <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
+
                   <button type="submit" style="float:right;" class="btn btn-danger">UNLIKE</button>
               </div>
               </form>
@@ -223,7 +228,17 @@
         Nothing to show...
           </div>
         </div>
-        @endforelse
+        @endforelse--}}
+
+        <div class="card" v-for="comment in comments">
+          <div class="card-body">
+            <p>@{{comment.body}}</p>
+            <like-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite"   ></like-button>
+            <unlike-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
+          </div>
+        </div>
+
+
 
       </div>
 
@@ -231,4 +246,118 @@
   　</div>
 </div>
 
+
+@endsection
+
+@section('scripts')
+<script>
+
+Vue.component('like-button', {
+  data: function() {
+    return {
+      // comments: {},
+
+      counter: {},
+    }
+  },
+  methods: {
+    toggleCounter: function(comment) {
+        if(my_favorite=true){
+          counter -= 1
+
+        }else {
+          counter +=1
+
+        }
+    },
+  },
+  template: '<i class="fa fa-heart"   style="color:tomato"></i>'
+});
+Vue.component('unlike-button', {
+  data: function() {
+    return {
+      // comments: {},
+
+    }
+  },
+  template: '<i class="fa fa-heart" f004></i>'
+});
+
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    show: false,
+    user: {!! Auth::user()->toJson() !!},
+    comments: {},
+  },
+  created() {
+    this.submit();
+  },
+  mounted() {
+    this.getComments();
+  },
+  methods: {
+    getComments() {
+      axios.get('/api/user/'+this.user.id+'/comments')
+      .then((response) => {
+        this.comments = response.data;
+        // this.getLikeComments();
+        console.log(response.data.comment);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    likeComment(id) {
+    axios.post('/api/comment/'+id+'/likes', {
+      api_token: this.user.api_token
+    })
+    .then((response) => {
+      console.log('dododo');
+      // this.getComments();
+      // this.getLikeComments();
+    })
+    .catch(function (error) {
+      alert('success');
+      console.log(error.message);
+    });
+    },
+
+    unlikeComment(id) {
+      axios.post('/api/comment/'+id+'/unlikes',{
+        api_token:this.user.api_token
+      })
+      .then((response) => {
+
+        // this.getComments();
+        console.log('bababa');
+      })
+      .catch(function(error) {
+        alert('alert');
+        console.log(error.message);
+      });
+    },
+
+    submit: function() {
+      var self = this;
+      this.show = true;
+      axios.get(this.user.id)
+      .then(function(response){
+        console.log('d');
+
+      })
+      .catch(function(error){
+        console.log('dd');
+      })
+      .then(function() {
+        self.show = false;
+        console.log('ddd');
+      });
+    },
+  }
+})
+
+</script>
 @endsection

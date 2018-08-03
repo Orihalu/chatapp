@@ -191,14 +191,22 @@ class UserController extends Controller
       $user = Auth::user();
       $comment = Comment::find($id);
       $comment_id = $id->id;
-      $favorite = $user->favoriteComments()->detach($comment_id);
-      // return redirect()->back();
+      $user->favoriteComments()->detach($comment_id);
+      return redirect()->back();
     }
 
     public function favorite(User $id) {
-      return response()->json([
-        'comment' => $id->favoriteComments()->with('favorites')->latest()->get(),
-    ]);
+      $user = $id;
+      $favorite_comments = $user->favoriteComments;
+      foreach($favorite_comments as $favorite_comment) {
+        $favorite_comment['my_favorite'] = $user->isFavoritesComment($favorite_comment->id);
+      }
+      return response()->json($favorite_comments);
   }
+
+
+
+
+
 
 }

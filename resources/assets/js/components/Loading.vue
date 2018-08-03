@@ -6,7 +6,7 @@
 export default {
 props: {
     text: {
-        default: 'ロード中...',
+        default: 'NowLoading...',
         type: String
     },
     show: {

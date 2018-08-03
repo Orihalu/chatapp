@@ -23,8 +23,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/rooms', 'RoomController@index');
 Route::post('/rooms', 'RoomController@search');
 
-Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
+// Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
 Route::get('/room/create', 'RoomController@create');
+Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
+
 Route::post('/room/store', 'RoomController@store');
 Route::delete('/room/{id}', 'CommentController@destroy');
 Route::post('/room/{id}/like','UserController@like');
@@ -51,4 +53,5 @@ Route::patch('/users/{user}','AdminController@update');
 
 Route::middleware('auth')->group(function () {
 Route::get('/api/room/{id}/user/{user}/comments','CommentController@index')->where('id','[0-9]+');
+Route::get('/api/user/{user}/comments','UserController@favorite')->where('id','[0-9]+');
 });
