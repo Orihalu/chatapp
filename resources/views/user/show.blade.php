@@ -32,7 +32,6 @@
 
     <div class="card" style="margin-bottom:20px;">
       <div class="card-body">
-        {{$user->following}}
         <h1>{{ $user->name }}</h1>
         @if(Auth::user()->following->contains($user->id))
         <form method="post" action="{{ action('UserController@unfollow',$user) }}">

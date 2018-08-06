@@ -52,8 +52,6 @@
                 <div class="card-body">
                     <a href="{{ action('RoomController@show',$room) }}" >{{$room->name}}</a>
 
-{{$room->users}}
-{{Auth::user()->id}}
                         @if(empty($room->users->toArray()))
                             <form method="post" action="{{ action('UserController@join',$room) }}">
                               {{ csrf_field() }}
@@ -95,8 +93,6 @@
                 </div>
                 @endforelse
               </div>
-          {{--</div>
-      </div>--}}
   </div>
 
 

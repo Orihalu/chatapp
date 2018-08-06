@@ -22,7 +22,7 @@ class CommentController extends Controller
       // }
 // exit;
       $room_model = $id; // ややこしいので
-
+\Debugbar::info($id->comments);
       // ユーザがfavariteしてるcomment_idの配列を取得
       // $have_favarite_comment_ids = $room_model->join('comments', 'comments.room_id', 'rooms.id')
       //   ->join('favarites', function ($join) {

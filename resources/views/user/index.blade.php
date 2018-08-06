@@ -34,7 +34,6 @@
             <button class="btn btn-success"><i class="fa fa-search"></i></button>
           </form>
           @forelse ($users as $user)
-          {{$user->comments}}
 
               @if($user->id == Auth::user()->id)
               @continue
@@ -43,7 +42,6 @@
               <div class="card">
                 <div class="card-body">
                     <a href="{{ action('UserController@show',$user) }}" >{{$user->name}}</a>
-                    {{$user->following}}
                     <form method="post" action="{{ action('UserController@unfollow',$user) }}">
                       {{ csrf_field() }}
                       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
@@ -58,7 +56,6 @@
               <div class="card">
                 <div class="card-body">
                     <a href="{{ action('UserController@show',$user) }}" >{{$user->name}}</a>
-                    {{$user->following}}
 
                     <form method="post" action="{{ action('UserController@follow',$user) }}">
                       {{ csrf_field() }}
@@ -74,7 +71,6 @@
               <div class="card">
                 <div class="card-body">
                     <a href="{{ action('UserController@show',$user) }}" >{{$user->name}}</a>
-                    {{$user->following}}
 
                     <form method="post" action="{{ action('UserController@follow',$user) }}">
                       {{ csrf_field() }}

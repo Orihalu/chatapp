@@ -95,7 +95,8 @@
           {{ csrf_field() }}
 
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
-          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!show">Comment</button>
+          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!btn_processing">Comment</button>
+          <button class="btn btn-success" disabled style="margin-top:10px" @click.prevent="postComment" v-else>Loading</button>
         </form>
      </div>
 </div>
@@ -142,7 +143,7 @@ Vue.component('like-button', {
         }
     },
   },
-  template: '<i class="fa fa-heart"  @click="toggleCounter" style="color:tomato"></i>'
+  template: '<i class="fa fa-heart"   style="color:tomato"></i>'
 });
 Vue.component('unlike-button', {
   data: function() {
@@ -161,9 +162,9 @@ const app = new Vue({
         commentBox: '',
         room: {!! $room->toJson() !!},
         user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
-        favorites: {},
         show: false,
         counter: 0,
+        btn_processing: false,
       },
       created() {
         this.submit();
@@ -189,15 +190,19 @@ const app = new Vue({
         postComment() {
           axios.post('/api/room/'+this.room.id+'/comment', {
             api_token: this.user.api_token,
-            body: this.commentBox
+            body: this.commentBox,
+            btn_processing: this.btn_processing=true,
           })
           .then((response) => {
+            this.btn_processing = false;
+
             this.getComments();
             this.comments.unshift(response.data);
             this.commentBox = '';
           })
 
           .catch((error) => {
+            this.btn_processing = false;
             console.log(error);
           });
         },
