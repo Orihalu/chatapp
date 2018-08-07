@@ -4,7 +4,7 @@
 <div class="container" id="app" v-cloak>
 
 
-  <table class="table table-striped" style="background-color:white;"　　v-for="room in rooms">
+  <table class="table table-striped" style="background-color:white;">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -15,14 +15,12 @@
     </tr>
   </thead>
   <tbody v-for="room in rooms">
-    <div >
     <tr>
       <th scope="row">@{{room.id}}</th>
       <td>@{{room.name}}</td>
       <td>@{{room.user_id}}</td>
       <td>@{{room.created_at}}</td>
     </tr>
-    </div>
   </tbody>
 </table>
 </div>
