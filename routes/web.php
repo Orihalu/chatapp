@@ -45,8 +45,11 @@ Route::post('/users/{user}/unfollow','UserController@unfollow');
 
 Route::get('/admin/index','AdminController@index');
 Route::get('/admin/users','AdminController@showUsers');
+Route::get('/admin/rooms','AdminController@showRooms');
 Route::get('/admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');
-Route::patch('/users/{user}','AdminController@update');
+// Route::patch('/users/{user}','AdminController@update');
+Route::patch('/api/users/{user}/update','UserController@update');
+
 
 Route::middleware('auth')->group(function () {
 Route::get('/api/room/{id}/user/{user}/comments','CommentController@index')->where('id','[0-9]+');

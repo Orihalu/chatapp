@@ -228,11 +228,11 @@
           <div class="modal-body">
             <slot name="body">
               UserName
-              <input type="text" name="name" placeholder="Enter Name" value="{{old('name', $user->name)}}" class="form-control" v-model="name">
+              <input type="text" name="name" placeholder="Enter Name"  class="form-control" v-model="userName">
             </slot>
             <slot name="body">
               Email
-              <input type="text" name="email" placeholder="Enter Email" value="{{old('email', $user->email)}}" class="form-control" v-model="email">
+              <input type="text" name="email" placeholder="Enter Email"  class="form-control" v-model="userEmail">
             </slot>
           </div>
 
@@ -241,7 +241,7 @@
               <button class="modal-default-button btn btn-primary" @click="$emit('close')">
                 キャンセル
               </button>
-              <button type="submit" class="modal-default-button btn btn-success" @click="editUser">
+              <button type="submit" class="modal-default-button btn btn-success" @click="updateUser()">
                 編集
               </button>
             </slot>
@@ -252,40 +252,35 @@
   </transition>
 </script>
 
-@section('scripts')
-
-<script>
-export default {
-  props:["user"],
-  data: function(){
-    return{
-      name:this.user.name,
-      email:this.user.email,
-      request:{
-        name:'',
-        email:''
-      }
-    }
-  },
-  methods: {
-    sendName() {
-      if(this.name){
-        this.request.name = this.name;
-        this.$emit("namesent", {
-          id:this.user.id,
-          email:this.user.email,
-          request:this.request
-        });
-      }
-    }
-  }
-}
-</script>
-
 
 @section('scripts')
 <script>
   Vue.component('modal', {
+    data: function() {
+      return {
+        showModal: false,
+        user: {!! $user->toJson() !!},
+        userName: '',
+        userEmail: '',
+      }
+    },
+    methods: {
+      updateUser() {
+        axios.patch('/api/users/'+this.user.id+'/update', {
+          api_token: this.user.api_token,
+          name: this.userName,
+          email:this.userEmail,
+        })
+        .then((response) => {
+          alert('log');
+          console.log(response.data);
+        })
+        .catch(function(error) {
+          alert('koko');
+          console.log();
+        })
+      }
+    },
     template:'#modal-template'
   });
 
@@ -293,18 +288,25 @@ export default {
     el: '#app',
     data: {
       showModal: false,
+      user: {!! $user->toJson() !!},
+      userName: '',
+      userEmail: '',
     },
     methods: {
-      editUser: function() {
-        this.request.name = this.name;
-        this.request.email = this.email;
-          axios.patch('/users/'+this.user.id+'/update')
-          .then((response) => {
-            this.user = response.data
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
+      updateUser() {
+        axios.patch('/users/'+this.user.id+'/update', {
+          api_token: this.user.api_token,
+          name: this.userName,
+          email: this.userEmail,
+        })
+        .then((response) => {
+          this.user.name = response.data.name;
+          this.user.email = response.data.email;
+        })
+        .catch(function(error) {
+          alert('koko');
+          console.log(error);
+        })
       }
     }
   });

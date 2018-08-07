@@ -109,9 +109,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+      dd($request);
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->save;
+      return response()->json($user);
     }
 
     /**

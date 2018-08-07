@@ -10,17 +10,7 @@
 @endforeach
 --}}
 
-<div class="container" >
-  <button id="show-modal" @click="showModal = true" >testcreate</button>
-  <modal v-if="showModal" @close="closeModal">
-    <!--
-      you can use custom content here to overwrite
-      default content
-    -->
-    <h3 slot="header">custom header</h3>
-  </modal>
-</div>
-
+{{--modal部分--}}
 <script type="text/x-template" id="modal-template">
   <transition name="modal">
     <div class="modal-mask">
@@ -58,7 +48,7 @@
 
 
 
-<div class="container">
+<div class="container" v-cloak>
   @if (session('status'))
       <div class="alert alert-success" role="alert">
           {{ session('status') }}
@@ -74,14 +64,14 @@
                 <div class="card-header">
                   <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                      <a href="{{ url('/rooms') }}"  class="nav-link">Rooms</a>
+                      <a href="{{ url('/rooms') }}"  class="nav-link btn btn-light" style="background-color: rgba(0, 0, 0, 0.03);" >Rooms</a>
                     </li>
                     <li class="nav-item">
-                      <a  href="{{ url('/users') }}" class="nav-link">Users</a>
+                      <a  href="{{ url('/users') }}" class="nav-link btn btn-light" style="background-color: rgba(0, 0, 0, 0.03);">Users</a>
                     </li>
                     @can('system-only')
                     <li class="nav-item">
-                      <a href="{{ url('admin/index') }}" class="nav-link">Admin Menu</a>
+                      <a href="{{ url('admin/index') }}" class="nav-link btn btn-light" style="background-color: rgba(0, 0, 0, 0.03);">Admin Menu</a>
                     </li>
                     @endcan
                   </ul>
@@ -93,8 +83,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <a href="{{ url('/room/create') }}">＋ルーム作成</a>
+                    <button id="show-modal" class="btn btn-light"  @click="showModal = true" >＋ルーム作成</button>
+                    <modal v-if="showModal" @close="closeModal">
+                      <!--
+                        you can use custom content here to overwrite
+                        default content
+                      -->
+                      <h3 slot="header">Room Create Form</h3>
+                    </modal>
+                  {{--  <a href="{{ url('/room/create') }}">＋ルーム作成</a>--}}
 
                 </div>
               </div>
@@ -138,9 +135,7 @@ Vue.component('modal', {
       }
     },
   methods: {
-    closeModal() {
-      this.showModal = false
-    },
+
     createRoom() {
       axios.post('/api/create/'+this.user.id, {
         api_token: this.user.api_token,
@@ -165,6 +160,7 @@ const app = new Vue({
     user: {!! Auth::check() ? Auth::user()->toJson() : 'null'  !!},
     roomName: '',
     showModal: false,
+    follow_btn_processing: false,
   },
   methods: {
     closeModal() {

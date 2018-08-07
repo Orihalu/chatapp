@@ -27,3 +27,4 @@ Route::middleware('auth:api')->group(function () {
 
 Route::get('comments/{id}/status', 'CommentController@isFavoritesComment');
 Route::get('comments/{id}/status', 'CommentController@isFavoritesComment');
+Route::get('rooms','AdminController@showIndexOfRooms');

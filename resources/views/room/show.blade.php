@@ -1,6 +1,7 @@
 @extends ('layouts.app')
 @section('content')
 <v-loading :show="show" v-cloak></v-loading>
+
 <div class="container" v-cloak >
   @if (session('status'))
       <div class="alert alert-success" role="alert">
@@ -234,13 +235,6 @@ const app = new Vue({
             console.log(error.message);
           });
         },
-        // toggleLike(id) {
-        //   if(comment.my_favorite=true){
-        //     this.unlikeComment(id)
-        //   }else{
-        //     this.likeComment(id)
-        //   }
-        // },
 
         unlikeComment(id) {
           axios.post('/api/comment/'+id+'/unlikes',{

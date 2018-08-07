@@ -4,12 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Room;
 
 class AdminController extends Controller
 {
     public function index() {
       return view('admin.index');
     }
+
+    public function showRooms() {
+      $rooms = Room::latest()->get();
+      // return response()->json($rooms);
+      return view('admin.rooms')->with('rooms',$rooms);
+    }
+    public function showIndexOfRooms() {
+      $rooms = Room::latest()->get();
+      return response()->json($rooms);
+      // return view('admin.rooms')->with('rooms',$rooms);
+    }
+
+
 
     public function showUsers() {
       $users = User::latest()->get();
@@ -26,7 +40,7 @@ class AdminController extends Controller
       // dd($request->name);
       $user->name = $request->name;
       $user->email = $request->email;
-      $user->save();
-      return redirect('/admin/users');
+      $user->save;
+      return response()->json($user);
     }
 }
