@@ -21,8 +21,9 @@ class RoomController extends Controller
 
 
 
-    public function show($id) {
-      $room = Room::findOrFail($id);
+    public function show(Room $room) {
+      // $room = Room::findOrFail($id);
+      // dd($room);
       if($room->users->contains('id',Auth::user()->id)) {
         return view('room.show')->withRoom($room);
       }
@@ -72,6 +73,12 @@ class RoomController extends Controller
 
       // dd($rooms);
 
+    }
+
+    public function getRoom(Room $room) {
+      // $room = Room::find($id);
+      dd($room);
+      return response()->json($room);
     }
 
     public function __construct() {

@@ -18,3 +18,20 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('v-loading', require('./components/Loading.vue'));
+Vue.component('like-button', require('./components/LikeButton.vue'));
+Vue.component('modal', require('./components/RoomCreateModal.vue'));
+Vue.component('comment-component', require('./components/CommentComponent.vue'));
+Vue.component('unlike-button', require('./components/UnlikeButton.vue'));
+
+
+
+const app = new Vue({
+      el: '#app',
+      // created() {
+      //   this.submit();
+      // },
+      data: {
+        show: false,
+      },
+
+    });

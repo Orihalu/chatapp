@@ -12,12 +12,19 @@ props: {
     show: {
         default: false,
         type: Boolean
-    }
-},
+    },
+  },
+
+  created: function() {
+    this.show = this.props
+    this.submit();
+  },
+
+  methods: {
 submit: function() {
   var self = this;
   this.show = true;
-  axios.get(this.room.id)
+  axios.get('/api/loading')
   .then(function(response){
     console.log('d');
 
@@ -30,6 +37,6 @@ submit: function() {
     console.log('ddd');
   });
 },
-
+},
 }
 </script>

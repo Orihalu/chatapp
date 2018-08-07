@@ -208,6 +208,11 @@ class UserController extends Controller
       return response()->json($favorite_comments);
   }
 
+    public function getAuthUser() {
+      $user = Auth::user();
+      return response()->json($user);
+    }
+
 
 
 
