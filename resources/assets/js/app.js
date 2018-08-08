@@ -22,7 +22,7 @@ Vue.component('like-button', require('./components/LikeButton.vue'));
 Vue.component('modal', require('./components/RoomCreateModal.vue'));
 Vue.component('comment-component', require('./components/CommentComponent.vue'));
 Vue.component('unlike-button', require('./components/UnlikeButton.vue'));
-
+Vue.component('modal',require('./components/Modal.vue'));
 
 
 const app = new Vue({
@@ -32,6 +32,7 @@ const app = new Vue({
       // },
       data: {
         show: false,
+        showModal: false,
       },
 
     });

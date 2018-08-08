@@ -77,7 +77,7 @@ class RoomController extends Controller
 
     public function getRoom(Room $room) {
       // $room = Room::find($id);
-      dd($room);
+      // dd($room);
       return response()->json($room);
     }
 

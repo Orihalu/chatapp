@@ -4,7 +4,7 @@
 <div class="container" id="app" v-cloak>
 
 
-  <table class="table table-striped" style="background-color:white;">
+  <table class="table table-striped" style="background-color:white;" >
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -15,6 +15,7 @@
     </tr>
   </thead>
   <tbody v-for="room in rooms">
+
     <tr>
       <th scope="row">@{{room.id}}</th>
       <td>@{{room.name}}</td>
@@ -34,9 +35,12 @@
 
 const app = new Vue({
   el: '#app',
-  data: {
-    rooms: {},
+  data: function(){
+    return {
+    rooms: {
+    },
     roomName: '',
+    }
   },
 
   mounted() {
@@ -48,7 +52,7 @@ const app = new Vue({
       axios.get('/api/rooms')
       .then((response) => {
         this.rooms = response.data;
-        console.log('OK');
+        console.log(response.data);
       })
       .catch(function(error) {
         console.log('dame');
