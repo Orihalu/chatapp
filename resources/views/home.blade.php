@@ -50,7 +50,7 @@
                         </div>
                     @endif
                     <button id="show-modal" class="btn btn-light"  @click="showModal = true" >＋ルーム作成</button>
-                    <modal v-if="showModal" @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" >
+                    <modal v-if="showModal" @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" v-cloak >
                       <h4 slot="header">Room Create Form</h4>
                     </modal>
 

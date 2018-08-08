@@ -10417,3 +10417,28 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+@-webkit-keyframes cloak-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+@keyframes cloak-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+#app {
+  -webkit-animation: cloak-in 2s;
+          animation: cloak-in 2s;
+}
+
+#app[v-cloak] {
+  opacity: 0;
+}
+
+[v-cloak] {
+  display: none;
+}
+

@@ -12,3 +12,15 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+@keyframes cloak-in {
+  0% { opacity: 0;}
+}
+ #app {
+  animation: cloak-in 2s;
+}
+#app[v-cloak] {
+  opacity: 0;
+}
+[v-cloak] {
+  display: none;
+}
