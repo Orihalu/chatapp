@@ -75,10 +75,10 @@ class RoomController extends Controller
 
     }
 
-    public function getRoom(Room $room) {
-      // $room = Room::find($id);
+    public function getRoom() {
+      $rooms = Room::latest()->get();
       // dd($room);
-      return response()->json($room);
+      return response()->json($rooms);
     }
 
     public function __construct() {

@@ -23,6 +23,7 @@ Vue.component('modal', require('./components/RoomCreateModal.vue'));
 Vue.component('comment-component', require('./components/CommentComponent.vue'));
 Vue.component('unlike-button', require('./components/UnlikeButton.vue'));
 Vue.component('modal',require('./components/Modal.vue'));
+Vue.component('rooms',require('./components/Rooms.vue'));
 
 
 const app = new Vue({
