@@ -59,9 +59,9 @@ var token = 'csrf_token here'
     getComments() {
       axios.get('/api/room/'+this.room.id+'/user/'+this.user.id+'/comments')
             .then((response) => {
-              this.comments = response.data.reverse();
+              this.comments = response.data;
               // this.getLikeComments();
-              console.log(response.data.comment);
+              console.log(error);
             })
             .catch(function (error) {
               console.log(error);
@@ -76,9 +76,8 @@ var token = 'csrf_token here'
       })
       .then((response) => {
         this.btn_processing = false;
-
-        this.getComments();
-        this.comments.unshift(response.data);
+        this.comments.push(response.data);
+        // this.comments.push(response.data);
         this.commentBox = '';
       })
 

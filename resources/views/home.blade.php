@@ -11,7 +11,10 @@
 --}}
 
 {{--modal部分--}}
-
+<button id="show-modal" class="btn btn-light"  @click="$emit('show')" >TEST</button>
+<test-modal  @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" v-cloak >
+  <h4 slot="header">Room Create Form</h4>
+</test-modal>
 
 
 <div class="container" v-cloak>

@@ -32,7 +32,7 @@ class CommentController extends Controller
 
         // commentを見たときに上の配列にidが含まれているかどうか
         // CommentResource::collection($comment_model, $have_favarite_comment_ids);
-        $comment_models = $id->comments()->with('user')->latest()->get();
+        $comment_models = $id->comments()->with('user')->get();
         // $user = User::find(3);
         // $user = User::find(3);
         // dd($user);
