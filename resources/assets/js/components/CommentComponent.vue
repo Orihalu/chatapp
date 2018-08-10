@@ -21,12 +21,13 @@
       </div>
     </div>
 
-
+    <div id="scroll">
      <div id="app" class="panel-footer" style="margin-top:10px" v-cloak>
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
           <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!btn_processing">Comment</button>
           <button class="btn btn-success" disabled style="margin-top:10px" @click.prevent="postComment" v-else>Loading</button>
      </div>
+    </div>
 </div>
 </template>
 
@@ -77,8 +78,8 @@ var token = 'csrf_token here'
       .then((response) => {
         this.btn_processing = false;
         this.comments.push(response.data);
-        // this.comments.push(response.data);
         this.commentBox = '';
+        console.log(response.data);
       })
 
       .catch((error) => {

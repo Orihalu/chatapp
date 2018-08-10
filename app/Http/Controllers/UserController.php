@@ -20,11 +20,8 @@ class UserController extends Controller
     public function index()
     {
         $users =  User::latest()->get();
-        // dd($users);
-
 
         return view('user.index')->with('users',$users);
-
     }
 
     /**
@@ -45,15 +42,11 @@ class UserController extends Controller
      */
     public function join(Request $request,Room $id)
     {
-      // dd($id);
         $rooms = Room::all();
 
         $user = Auth::user();
         $room = Room::find($id);
         $room_id = $id;
-        // dd($user->rooms);
-        // $room->users()->attach($request->user_id);
-
         $user->rooms()->attach($room_id);
       return redirect()->back()->with('status','さんかしました');
     }
@@ -76,13 +69,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-      // dd($id);
       $user = User::findOrFail($id);
-      // dd(Auth::user()->id);
-
 
       if ($user->id==Auth::user()->id) {
-        // dd(Auth::user()->id);
 
           return view('user.profil')->with('user',$user);
         }
@@ -111,7 +100,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-      dd($request);
       $user->name = $request->name;
       $user->email = $request->email;
       $user->save;
@@ -128,6 +116,7 @@ class UserController extends Controller
     {
         //
     }
+
 
     public function search(Request $request) {
       $keyword = $request->name;
@@ -147,17 +136,16 @@ class UserController extends Controller
 
 
     public function follow(User $user) {
-      // dd($user->users);
       $followed_user = User::find($user->id);
       $follow_user = Auth::user();
       if(! $user) {
         return redirect()->back()->with('error','User doesn not exist');
       }
-// dd($follow_user->relationships());
       $follow_user->following()->attach($followed_user->id);
-
       return redirect()->back()->with('status','followshitayo');
     }
+
+
 
     public function unfollow (User $user) {
       $followed_user = User::find($user->id);
@@ -171,25 +159,10 @@ class UserController extends Controller
 
 
     public function like(Comment $id) {
-      // $favorite = Auth::user()->favoriteComments()->create([
-      //   'comment_id' => $id->id,
-      //   'user_id' => Auth::id()
-      // ]);
-      //
-      //
-      // return $favorite->toJson();
+
       $comment = Comment::find($id);
       $comment_id = $id->id;
       $favorite = Auth::user()->favoriteComments()->attach($comment_id);
-      // return redirect()->back()->with('status','success');
-      // return $favorite->toJson();
-
-      // $user = Auth::user();
-      // $comment = Comment::find($id);
-      // $comment_id = $id->id;
-      // $user->favoriteComments()->attach($comment_id);
-      // return $favorite->toJson();
-      // return redirect()->back();
     }
     public function unlike(Comment $id) {
       $user = Auth::user();

@@ -52,9 +52,11 @@ Route::patch('/api/users/{user}/update','UserController@update');
 
 
 Route::middleware('auth')->group(function () {
-Route::get('/api/room/{id}/user/{user}/comments','CommentController@index')->where('id','[0-9]+');
-Route::get('/api/user/{user}/comments','UserController@favorite')->where('id','[0-9]+');
-Route::post('/api/create/{user}','RoomController@store')->where('id','[0-9]+');
-Route::get('/api/user','UserController@getAuthUser');
-Route::get('/api/room/','RoomController@getRoom');
+  Route::get('/api/room/{id}/user/{user}/comments','CommentController@index')->where('id','[0-9]+');
+  Route::get('/api/user/{user}/comments','UserController@favorite')->where('id','[0-9]+');
+  Route::post('/api/create/{user}','RoomController@store')->where('id','[0-9]+');
+  Route::get('/api/user','UserController@getAuthUser');
+  Route::get('/api/room/','RoomController@getRoom');
+  Route::post('/api/user/register','Auth\RegisterController@register');
+  Route::delete('/api/room/{id}/delete','RoomController@destroy');
 });

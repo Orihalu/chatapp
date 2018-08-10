@@ -10,23 +10,51 @@
             </slot>
           </div>
 
-          <div class="modal-body">
-            <slot name="body">
-              RoomName
-              <input type="text" name="name" placeholder="Enter Name" class="form-control" v-model="roomName">
-            </slot>
+          <div v-if="modalType === 'createRoom'">
+            <div class="modal-body">
+              <slot name="body">
+                RoomName
+                <input type="text" name="name" placeholder="Enter Name" class="form-control" v-model="roomName">
+              </slot>
+            </div>
+
+            <div class="modal-footer">
+              <slot name="footer">
+                <button class="modal-default-button btn btn-primary" @click="$emit('close')">
+                  キャンセル
+                </button>
+                <button type="submit"  class="modal-default-button btn btn-success" @click="createRoom();$emit('close')">
+                  作成
+                </button>
+              </slot>
+            </div>
           </div>
 
-          <div class="modal-footer">
-            <slot name="footer">
-              <button class="modal-default-button btn btn-primary" @click="$emit('close')">
-                キャンセル
-              </button>
-              <button type="submit"  class="modal-default-button btn btn-success" @click="createRoom();$emit('close')">
-                作成
-              </button>
-            </slot>
+          <div v-if="modalType === 'registerUser'">
+            <div class="modal-body">
+              <slot name="body">
+                UserName
+                <input type="text" name="name" placeholder="User Name" class="form-control" v-model="userName"/>
+                Email
+                <input type="text" name="email" placeholder="Email" class="form-control" v-model="userEmail"/>
+                password
+                <input type="text" name="pass" placeholder="pass" class="form-control" v-model="userPass"/>
+              </slot>
+            </div>
+
+            <div class="modal-footer">
+              <slot name="footer">
+                <button class="modal-default-button btn btn-primary" @click="$emit('close')">
+                  キャンセル
+                </button>
+                <button type="submit" class="modal-default-button btn btn-success" @click="registerUser();$emit('close')">
+                  登録
+                </button>
+              </slot>
+            </div>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -36,37 +64,60 @@
 
 <script>
 export default {
-  props: ["authUser"],
+  props: ["authUser","rooms","modalType"],
   data() {
     return {
       user: {},
       roomName: '',
-      showModal: false,
+      propsrooms: {},
+      userName: '',
+      userEmail: '',
+      userPass: '',
       }
     },
     created: function() {
-    this.user = this.authUser;
+      this.propsrooms = this.rooms
     },
     methods: {
       createRoom() {
         axios.post('/api/create/'+this.user.id, {
           api_token: this.user.api_token,
           name: this.roomName,
-          user_id: this.user.id
+          user_id: this.authUser.id
         })
         .then((response) => {
           this.roomName = '';
           alert('success');
           this.closeModal()
+          this.propsrooms.push(response.data);
+          console.log('s');
         })
         .catch(function(error) {
-          console.log('failed');
+          console.log(error);
         })
       },
 
       closeModal() {
         this.showModal = false
       },
+
+      registerUser() {
+        axios.post('/api/user/register', {
+          name: this.userName,
+          email: this.userEmail,
+          password: this.userPass,
+        })
+        .then((response) => {
+          this.userName = '';
+          this.userEmail = '';
+          this.userPass = '';
+          alert('success');
+          console.log('iine');
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+      }
     },
   }
 </script>

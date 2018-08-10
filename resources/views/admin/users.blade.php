@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-
+<button class="btn btn-success" @click="showModal = true">＋ユーザー登録</button>
+<modal v-if="showModal" @close="showModal = false" v-bind:modal-type="'registerUser'"></modal>
   <table class="table table-striped" style="background-color:white;">
   <thead>
     <tr>

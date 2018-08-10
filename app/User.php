@@ -44,9 +44,6 @@ class User extends Authenticatable
       return $this->hasManyThrough('App\User','App\Relationship');
     }
 
-    // public function relationships() {
-    //   return $this->belongsToMany('App\User','relationships','follow_id','follower_id')->withPivot('follower_id');
-    // }
 
     public function following() {
       return $this->belongsToMany('App\User','relationships','follow_id','follower_id')->withPivot('follow_id','follower_id');

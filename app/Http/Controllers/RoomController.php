@@ -14,8 +14,6 @@ class RoomController extends Controller
 {
     public function index() {
     $rooms = Room::latest()->get();
-    // $rooms = Room::paginate(5);
-    // dd($rooms->toArray());
     return view('room.index')->with('rooms',$rooms);
   }
 
@@ -37,47 +35,43 @@ class RoomController extends Controller
       return view('room.create');
     }
 
+
+    public function destroy(Room $id) {
+      $room = Room::find($id->id);
+      $room->users()->detach();
+      $room->delete();
+    }
+
+
+
     public function store(Request $request) {
       $room = new Room();
-      // dd($request->id);
-      // $room->room_id = $request->id;
       $user = new User();
       $room->user_id = $request->user_id;
       $room->name = $request->name;
       $room->save();
 
       $room->users()->attach($request->user_id);
-
-
-      // return redirect('/home');
-
+      return response()->json($room);
 
 
     }
 
 
     public function search(Request $request) {
-      // dd($request->name);
       $keyword = $request->name;
 
       $query = Room::query();
-// dd($query->latest());
       if(!empty($keyword)) {
           $query->where('name','like','%'.$keyword.'%');
       }
-      // dd($query);
       $rooms = $query->latest()->paginate(10);
-      // $rooms = Room::paginate(5);
-      // dd(Room::paginate(5));
+
       return view('room.index')->with('rooms', $rooms)->with('keyword', $keyword);
-
-      // dd($rooms);
-
     }
 
     public function getRoom() {
       $rooms = Room::latest()->get();
-      // dd($room);
       return response()->json($rooms);
     }
 

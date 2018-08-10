@@ -27,14 +27,20 @@ Vue.component('rooms',require('./components/Rooms.vue'));
 Vue.component('test-modal',require('./components/testModal.vue'));
 
 
+// var eventHub = new Vue()
+// module.exports = eventHub;//←※これだとok
+
+
+
 const app = new Vue({
       el: '#app',
-      // created() {
-      //   this.submit();
-      // },
       data: {
         show: false,
         showModal: false,
+      },
+      components: {
+        Modal: require('./components/Modal.vue'),
+        Rooms: require('./components/Rooms.vue'),
       },
 
     });

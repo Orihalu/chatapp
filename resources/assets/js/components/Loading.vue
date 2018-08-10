@@ -1,42 +1,38 @@
 <template>
-<div v-if="show"><img src="https://www.homepage-tukurikata.com/image/lion.jpg" >&nbsp;<span v-text="text"></span></div>
+<div v-if="show"><img :src="img_src" >&nbsp;<span v-text="text"></span></div>
 </template>
 
 <script>
 export default {
-props: {
-    text: {
-        default: 'NowLoading...',
-        type: String
-    },
-    show: {
-        default: false,
-        type: Boolean
-    },
-  },
+    data() {
+        return{
+          text: 'NowLoading...',
+          show: false,
+          img_src: "/img/ajax-loader.gif"
+        }
+      },
 
-  created: function() {
-    this.show = this.props
-    this.submit();
-  },
+        created: function() {
+          this.submit();
+        },
 
-  methods: {
-submit: function() {
-  var self = this;
-  this.show = true;
-  axios.get('/api/loading')
-  .then(function(response){
-    console.log('d');
+    methods: {
+      submit: function() {
+        var self = this;
+        this.show = true;
+        axios.get('/api/')
+        .then(function(response){
+          console.log('d');
 
-  })
-  .catch(function(error){
-    console.log('dd');
-  })
-  .then(function() {
-    self.show = false;
-    console.log('ddd');
-  });
-},
-},
-}
+        })
+        .catch(function(error){
+          console.log('dd');
+        })
+        .then(function() {
+          self.show = false;
+          console.log('ddd');
+        });
+      },
+      },
+    }
 </script>
