@@ -89,7 +89,6 @@ export default {
           this.roomName = '';
           alert('success');
           this.closeModal()
-          this.propsrooms.push(response.data);
           console.log('s');
         })
         .catch(function(error) {

@@ -200,7 +200,7 @@
       </div>
 
       <div id="tab4" class="tab-pane">
-        {{--@forelse($user->favoriteComments as $favorite)
+        @forelse($user->favoriteComments as $favorite)
           @if(Auth::user()->favoriteComments->contains($favorite))
           <div class="card">
             <div class="card-body">
@@ -210,9 +210,9 @@
                 {{ csrf_field() }}
               <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
               <div class="form-group">
-                <like-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite"   ></like-button>
+            {{--    <like-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite"   ></like-button>
                 <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
-
+--}}
                   <button type="submit" style="float:right;" class="btn btn-danger">UNLIKE</button>
               </div>
               </form>
@@ -226,8 +226,8 @@
         Nothing to show...
           </div>
         </div>
-        @endforelse--}}
-
+        @endforelse
+{{--
         <div class="card" v-for="comment in comments">
           <div class="card-body">
             <p>@{{comment.body}}</p>
@@ -235,7 +235,7 @@
             <unlike-button style="float:right;" @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
           </div>
         </div>
-
+--}}
 
 
       </div>

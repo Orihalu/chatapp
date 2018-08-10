@@ -21,10 +21,6 @@ class Comment extends Model
       return $this->belongsToMany('App\User','favorites','comment_id','user_id');
     }
 
-    // public function getFavoritesCountsAttribute() {
-    //   return $this->favorites()->count();
-    // }
-
     public function favoriteCount() {
       return $this->favorites->count();
     }

@@ -49709,7 +49709,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.roomName = '';
         alert('success');
         _this.closeModal();
-        _this.propsrooms.push(response.data);
         console.log('s');
       }).catch(function (error) {
         console.log(error);
@@ -50046,9 +50045,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     deleteRoom: function deleteRoom(id) {
+      var _this2 = this;
+
       axios.delete('/api/room/' + id + '/delete', {}).then(function (response) {
         console.log('success');
         alert('complete');
+        _this2.rooms.shift();
       }).catch(function (error) {
         console.log(response.data);
       });
@@ -50086,8 +50088,9 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(room.created_at))]),
               _vm._v(" "),
               _c(
-                "td",
+                "button",
                 {
+                  staticClass: "btn btn-light",
                   on: {
                     click: function($event) {
                       _vm.deleteRoom(room.id)

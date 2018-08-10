@@ -19,7 +19,7 @@
           <td>{{room.name}}</td>
           <td>{{room.user_id}}</td>
           <td>{{room.created_at}}</td>
-          <td @click="deleteRoom(room.id)">×</td>
+          <button class="btn btn-light"  @click="deleteRoom(room.id)">×</button>
         </tr>
       </tbody>
 
@@ -64,6 +64,7 @@ export default {
       .then((response) => {
         console.log('success');
         alert('complete');
+        this.rooms.shift();
       })
       .catch(function(error) {
         console.log(response.data);
