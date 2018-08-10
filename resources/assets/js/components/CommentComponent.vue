@@ -79,7 +79,6 @@ var token = 'csrf_token here'
         this.btn_processing = false;
         this.comments.push(response.data);
         this.commentBox = '';
-        console.log(response.data);
       })
 
       .catch((error) => {
@@ -92,7 +91,6 @@ var token = 'csrf_token here'
       axios.get('/api/user')
       .then((response) => {
       this.user = response.data;
-      console.log(response.data);
       })
       .catch(function() {
       console.log('fail');

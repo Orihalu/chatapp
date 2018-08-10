@@ -9,19 +9,20 @@
           <th scope="col">Master_ID</th>
           <th scope="col">Created_at</th>
           <th></th>
-
         </tr>
       </thead>
+      <!-- <transition-group  class="table table-striped" tag="tbody" name="row"> -->
 
-      <tbody v-for="room in rooms">
-        <tr>
-          <th scope="row">{{room.id}}</th>
-          <td>{{room.name}}</td>
-          <td>{{room.user_id}}</td>
-          <td>{{room.created_at}}</td>
-          <button class="btn btn-light"  @click="deleteRoom(room.id)">×</button>
-        </tr>
-      </tbody>
+        <tbody  class="table" is="transition-group">
+          <tr　v-for="room in rooms"  :key="room.id" name="row">
+            <th scope="row" >{{room.id}}</th>
+            <td>{{room.name}}</td>
+            <td>{{room.user_id}}</td>
+            <td>{{room.created_at}}</td>
+            <td><button class="btn btn-light"  @click="deleteRoom(room.id)">×</button></td>
+          </tr>
+        </tbody>
+      <!-- </transition-group> -->
 
    </table>
   </div>
@@ -62,7 +63,6 @@ export default {
       axios.delete('/api/room/'+id+'/delete', {
       })
       .then((response) => {
-        console.log('success');
         alert('complete');
         this.rooms.shift();
       })
@@ -74,3 +74,20 @@ export default {
 }
 
 </script>
+
+<style>
+
+.v-leave-active, .v-move {
+  transition: all 1s;
+}
+
+.v-leave-active {
+  position: absolute;
+}
+.v-leave-to {
+  opacity: 0;
+  background: #f9a3b1;
+  transform: translateY(-30px);
+}
+
+</style>
