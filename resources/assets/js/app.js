@@ -25,11 +25,13 @@ Vue.component('unlike-button', require('./components/UnlikeButton.vue'));
 Vue.component('modal',require('./components/Modal.vue'));
 Vue.component('rooms',require('./components/Rooms.vue'));
 Vue.component('test-modal',require('./components/testModal.vue'));
-
+Vue.component('favorite-comments',require('./components/FavoriteComment.vue'))
 
 // var eventHub = new Vue()
 // module.exports = eventHub;//←※これだとok
 
+const VueScrollTo = require('vue-scrollto')
+Vue.use(VueScrollTo)
 
 
 const app = new Vue({

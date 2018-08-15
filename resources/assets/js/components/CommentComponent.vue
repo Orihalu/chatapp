@@ -1,5 +1,10 @@
 <template>
 <div id="app" v-cloak>
+
+  <button v-scroll-to="'#element'" class="btn btn-dark">
+    SCROLLLLL
+  </button>
+
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
@@ -21,13 +26,15 @@
       </div>
     </div>
 
-    <div id="scroll">
+    <div id="element">
      <div id="app" class="panel-footer" style="margin-top:10px" v-cloak>
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
           <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!btn_processing">Comment</button>
           <button class="btn btn-success" disabled style="margin-top:10px" @click.prevent="postComment" v-else>Loading</button>
      </div>
     </div>
+
+
 </div>
 </template>
 

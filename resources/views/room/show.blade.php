@@ -23,10 +23,6 @@
 
 <comment-component v-bind:room="{{ $room }}"></comment-component>
 
-
-<div id="element">
-    Hi. I'm #element.
-</div>
 </div>
 
 @endsection

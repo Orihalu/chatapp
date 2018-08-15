@@ -34,11 +34,11 @@
             <div class="modal-body">
               <slot name="body">
                 UserName
-                <input type="text" name="name" placeholder="User Name" class="form-control" v-model="userName"/>
+                <input id="name" type="text" name="name" placeholder="User Name" class="form-control" v-model="userName"/>
                 Email
-                <input type="text" name="email" placeholder="Email" class="form-control" v-model="userEmail"/>
+                <input id="email" type="email" name="email" placeholder="Email" class="form-control" v-model="userEmail"/>
                 password
-                <input type="text" name="pass" placeholder="pass" class="form-control" v-model="userPass"/>
+                <input id="password" type="password" name="password" placeholder="password" class="form-control" v-model="userPass"/>
               </slot>
             </div>
 
