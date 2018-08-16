@@ -1,36 +1,34 @@
 <template>
 <div id="app" v-cloak>
-
-  <button v-scroll-to="'#element'" class="btn btn-dark">
-    SCROOOOOL
-  </button>
-
-    <div class="media" style="margin-top:20px;" v-for="comment in comments">
+  <button class="btn brn-light" style="margin-bottom:10px;" @click.prevent="scrollDown()">DOWN</button>
+<transition-group>
+    <div class="media" style="margin-top:20px;" v-for="comment in comments" :key="comment.id">
       <div class="media-left">
-        <a href="#">
+        <a v-bind:href="'/users/'+comment.user_id" >
           <img class="media-object" src="http://placeimg.com/60/60" alt="...">
-          <p>@{{comment.user.name}}</p>
+          <p>{{comment.user.name}}</p>
         </a>
       </div>
       <div class="card container">
-      <div class="media-body">
-        <!-- <h4 class="media-heading">@{{comment.user.name}} said...</h4> -->
-        <p>
-          @{{comment.body}}
-        </p>
-          <like-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite" ></like-button>
-          <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
-        <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
+        <div class="media-body">
+          <p>
+            {{comment.body}}
+          </p>
+            <like-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite" ></like-button>
+            <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
+          <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
 
-      </div>
+        </div>
       </div>
     </div>
+</transition-group>
 
     <div id="element">
      <div id="app" class="panel-footer" style="margin-top:10px" v-cloak>
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
           <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!btn_processing">Comment</button>
           <button class="btn btn-success" disabled style="margin-top:10px" @click.prevent="postComment" v-else>Loading</button>
+          <button class="btn brn-dark" style="margin-top:10px; float:right;" @click.prevent="scrollTop()">TOP</button>
      </div>
     </div>
 
@@ -42,6 +40,7 @@
 <script>
 
 var token = 'csrf_token here'
+
 
   export default {
     props: ["Room"],
@@ -57,11 +56,14 @@ var token = 'csrf_token here'
     }
     },
     created: function() {
-      this.room = this.Room
+      this.room = this.Room;
+      this.getUser();
     },
     mounted: function(){
-      this.getUser();
       this.getComments();
+    },
+    updated: function() {
+      this.scrollDown();
     },
     methods: {
     getComments() {
@@ -99,7 +101,7 @@ var token = 'csrf_token here'
       .then((response) => {
       this.user = response.data;
       })
-      .catch(function() {
+      .catch(function(error) {
       console.log('fail');
       })
     },
@@ -132,6 +134,31 @@ var token = 'csrf_token here'
           });
         },
 
+        scrollDown() {
+          window.scrollTo(0,document.body.scrollHeight);
+        },
+        scrollTop() {
+          window.scrollTo(0,0);
+        },
+
     }
   }
+
 </script>
+
+<style>
+.v-enter-active, .v-leave-active, .v-move {
+  transition: opacity 1s, transform 1s;
+}
+.v-leave-active {
+  position: absolute;
+}
+.v-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+</style>

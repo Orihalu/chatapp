@@ -2,7 +2,7 @@
   <div>
     <div class="card" v-for="comment in comments">
       <div class="card-body">
-        <p>{{comment.body}}</p>
+        <p><a v-bind:href="'/room/'+comment.room_id">{{comment.body}}</a></p>
         <like-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite" style="float:right;"></like-button>
         <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite" style="float:right;"></unlike-button>
       </div>
