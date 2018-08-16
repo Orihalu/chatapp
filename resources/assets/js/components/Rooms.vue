@@ -16,7 +16,7 @@
         <tbody  class="table" is="transition-group">
           <tr　v-for="room in rooms"  :key="room.id" name="row">
             <th scope="row" >{{room.id}}</th>
-            <td>{{room.name}}</td>
+            <td><a v-bind:href="'/room/'+room.id">{{room.name}}</a></td>
             <td>{{room.user_id}}</td>
             <td>{{room.created_at}}</td>
             <td><button class="btn btn-light"  @click="deleteRoom(room.id)">×</button></td>
@@ -82,7 +82,7 @@ export default {
 }
 
 .v-leave-active {
-  position: absolute;
+  position: fixed;
 }
 .v-leave-to {
   opacity: 0;

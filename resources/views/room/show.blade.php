@@ -2,7 +2,7 @@
 @section('content')
 <div class="container" v-cloak >
 
-<v-loading :show="show" v-cloak></v-loading>
+<v-loading :show="show"></v-loading>
 
 <div class="container">
 

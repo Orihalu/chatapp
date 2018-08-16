@@ -2,7 +2,7 @@
 <div id="app" v-cloak>
 
   <button v-scroll-to="'#element'" class="btn btn-dark">
-    SCROLLLLL
+    SCROOOOOL
   </button>
 
     <div class="media" style="margin-top:20px;" v-for="comment in comments">

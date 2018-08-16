@@ -49336,7 +49336,7 @@ var render = function() {
           ],
           staticClass: "btn btn-dark"
         },
-        [_vm._v("\n    SCROLLLLL\n  ")]
+        [_vm._v("\n    SCROOOOOL\n  ")]
       ),
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
@@ -50046,7 +50046,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.v-leave-active, .v-move {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.v-leave-active {\n  position: absolute;\n}\n.v-leave-to {\n  opacity: 0;\n  background: #f9a3b1;\n  -webkit-transform: translateY(-30px);\n          transform: translateY(-30px);\n}\n\n", ""]);
+exports.push([module.i, "\n.v-leave-active, .v-move {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.v-leave-active {\n  position: fixed;\n}\n.v-leave-to {\n  opacity: 0;\n  background: #f9a3b1;\n  -webkit-transform: translateY(-30px);\n          transform: translateY(-30px);\n}\n\n", ""]);
 
 // exports
 
@@ -50154,7 +50154,11 @@ var render = function() {
             return _c("tr", { key: room.id, attrs: { name: "row" } }, [
               _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(room.id))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(room.name))]),
+              _c("td", [
+                _c("a", { attrs: { href: "/room/" + room.id } }, [
+                  _vm._v(_vm._s(room.name))
+                ])
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(room.user_id))]),
               _vm._v(" "),
