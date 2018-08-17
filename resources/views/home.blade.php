@@ -52,8 +52,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <button id="show-modal" class="btn btn-light"  @click="showModal = true" >＋ルーム作成</button>
-                    <modal v-if="showModal" @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" v-cloak >
+                    <button id="show-modal" class="btn btn-light" @click="showModal = true" >＋ルーム作成</button>
+                    <modal v-if="showModal" @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" v-bind:modal-type="'createRoom'" v-cloak >
                       <h4 slot="header">Room Create Form</h4>
                     </modal>
 

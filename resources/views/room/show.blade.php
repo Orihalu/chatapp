@@ -2,7 +2,7 @@
 @section('content')
 <div class="container" v-cloak >
 
-<v-loading :show="show" v-cloak></v-loading>
+<v-loading :show="show"></v-loading>
 
 <div class="container">
 
@@ -23,10 +23,6 @@
 
 <comment-component v-bind:room="{{ $room }}"></comment-component>
 
-
-<div id="element">
-    Hi. I'm #element.
-</div>
 </div>
 
 @endsection

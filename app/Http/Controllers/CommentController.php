@@ -48,4 +48,17 @@ class CommentController extends Controller
       return $check->contains($comment_id);
     }
 
+    public function indexOfFavorites() {
+      // dd('UUU');
+      $user = Auth::user();
+      $favorite_comments = $user->favoriteComments;
+      // dd($favorite_comments);
+      foreach($favorite_comments as $favorite_comment) {
+        $favorite_comment['my_favorite'] = $user->isFavoritesComment($favorite_comment->id);
+        $favorite_comment['favorite_counter'] = $favorite_comment->favoriteCount();
+      }
+
+      return response()->json($favorite_comments);
+    }
+
 }
