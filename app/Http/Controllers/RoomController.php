@@ -20,11 +20,10 @@ class RoomController extends Controller
 
 
     public function show(Room $room) {
-      // $room = Room::findOrFail($id);
-      // dd($room);
       if($room->users->contains('id',Auth::user()->id)) {
         return view('room.show')->withRoom($room);
       }
+
       else {
         return redirect()->back()->with('status', 'sankasitene');
       }

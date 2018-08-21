@@ -13,13 +13,11 @@ use Log;
 class CommentController extends Controller
 {
 
-
     public function index(Room $id) {
       $user = Auth::user();
       $room_model = $id; // ややこしいので
       \Debugbar::info($id->comments);
-
-        $comment_models = $id->comments()->with('user')->get();
+        $comment_models = $room_model->comments()->with('user')->get();
         foreach($comment_models as $comment) {
           $comment['my_favorite'] = $user->isFavoritesComment($comment->id);
           // $comment['favorite_counter'] = $comment->favoriteCount();
@@ -30,7 +28,7 @@ class CommentController extends Controller
     public function store(Request $request,Room $id) {
       $user = Auth::user();
 
-      $comment = $id->comments()->create([
+      $request_comment = $id->comments()->create([
         'body' => $request->body,
         'user_id' => Auth::id(),
         'room_id' => $id->id,
