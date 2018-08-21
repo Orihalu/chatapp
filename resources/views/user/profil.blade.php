@@ -38,7 +38,7 @@
 
     <div class="card" style="margin-bottom:20px;">
       <div class="card-body">
-        <h1>Name::{{ $user->name }}</h1>
+        <h1>Name<br/>{{ $user->name }}</h1>
         @if(Auth::user()->following->contains($user->id))
         <form method="post" action="{{ action('UserController@unfollow',$user) }}">
           {{ csrf_field() }}
@@ -47,16 +47,6 @@
             <button type="submit" style="float:right;" class="btn btn-danger">unfollow</button>
           </div>
         </form>
-        {{--
-          @else(Auth::user()->following->contains($user->id))
-        <form method="post" action="{{ action('UserController@follow',$user) }}">
-          {{ csrf_field() }}
-          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-          <div class="form-group">
-            <button type="submit" style="float:right;" class="btn btn-success">follow</button>
-          </div>
-        </form>
-        --}}
         @endif
       </div>
     </div>

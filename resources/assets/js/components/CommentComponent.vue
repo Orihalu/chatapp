@@ -2,7 +2,7 @@
 <div id="app" v-cloak>
   <button class="btn brn-light" style="margin-bottom:10px;" @click.prevent="scrollDown()">DOWN</button>
 <transition-group>
-    <div class="media" style="margin-top:20px;" v-for="comment in comments" :key="comment.id">
+    <div class="media" style="margin-top:20px;" v-for="(comment, index) in comments" :key="index">
       <div class="media-left">
         <a v-bind:href="'/users/'+comment.user_id" >
           <img class="media-object" src="http://placeimg.com/60/60" alt="...">
@@ -16,7 +16,7 @@
           </p>
             <like-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;unlikeComment(comment.id)" v-show="comment.my_favorite" ></like-button>
             <unlike-button @click.native.prevent="comment.my_favorite=!comment.my_favorite;likeComment(comment.id)"　v-show="!comment.my_favorite"></unlike-button>
-          <span style="color: #aaa; float:right;">on @{{comment.created_at}}</span>
+          <span style="color: #aaa; float:right;">on {{comment.created_at}}</span>
 
         </div>
       </div>
@@ -26,7 +26,7 @@
     <div id="element">
      <div id="app" class="panel-footer" style="margin-top:10px" v-cloak>
           <textarea class="form-control" style="margin-top:10px" rows="3" name="body" placeholder="Leave a comment" v-model="commentBox" ></textarea>
-          <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment" v-if="!btn_processing">Comment</button>
+          <button class="btn btn-success" style="margin-top:10px" @click="postComment" v-if="!btn_processing">Comment</button>
           <button class="btn btn-success" disabled style="margin-top:10px" @click.prevent="postComment" v-else>Loading</button>
           <button class="btn brn-dark" style="margin-top:10px; float:right;" @click.prevent="scrollTop()">TOP</button>
      </div>
@@ -61,6 +61,7 @@ var token = 'csrf_token here'
     },
     mounted: function(){
       this.getComments();
+      this.listen();
     },
     updated: function() {
       this.scrollDown();
@@ -117,30 +118,37 @@ var token = 'csrf_token here'
         .catch(function (error) {
           alert('success');
           console.log(error.message);
-        });
-        },
+      });
+      },
 
-        unlikeComment(id) {
-          axios.post('/api/comment/'+id+'/unlikes',{
-            api_token:this.user.api_token
-          })
-          .then((response) => {
-            // this.getComments();
-            console.log('bababa');
-          })
-          .catch(function(error) {
-            alert('alert');
-            console.log(error.message);
-          });
-        },
+    unlikeComment(id) {
+      axios.post('/api/comment/'+id+'/unlikes',{
+        api_token:this.user.api_token
+      })
+      .then((response) => {
+        // this.getComments();
+        console.log('bababa');
+      })
+      .catch(function(error) {
+        alert('alert');
+        console.log(error.message);
+      });
+    },
 
-        scrollDown() {
-          window.scrollTo(0,document.body.scrollHeight);
-        },
-        scrollTop() {
-          window.scrollTo(0,0);
-        },
+    scrollDown() {
+      window.scrollTo(0,document.body.scrollHeight);
+    },
+    scrollTop() {
+      window.scrollTo(0,0);
+    },
 
+    listen() {
+      Echo.channel('room.'+this.room.id)
+        .listen('NewComment', (comment) => {
+          this.comments.push(comment);
+          console.log(comment);
+        })
+      },
     }
   }
 

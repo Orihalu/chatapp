@@ -22,7 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/rooms', 'RoomController@index');
 Route::post('/rooms', 'RoomController@search');
-// Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
 Route::get('/room/create', 'RoomController@create');
 Route::get('/room/{room}', 'RoomController@show')->where('id','[0-9]+');
 Route::post('/room/store', 'RoomController@store');
@@ -47,10 +46,9 @@ Route::get('/admin/index','AdminController@index');
 Route::get('/admin/users','AdminController@showUsers');
 Route::get('/admin/rooms','AdminController@showRooms');
 Route::get('/admin/users/{user}/edit','AdminController@edit')->where('id','[0-9]+');
-// Route::patch('/users/{user}','AdminController@update');
 Route::patch('/api/users/{user}/update','UserController@update');
 
-Route::get('/api/favorite/comments','CommentController@indexOfFavorites');
+Route::get('/api/favorite/comments','CommentController@getFavoriteComment');
 
 
 Route::middleware('auth')->group(function () {
