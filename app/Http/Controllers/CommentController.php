@@ -17,7 +17,7 @@ class CommentController extends Controller
       $user = Auth::user();
       $room_model = $id; // ややこしいので
       \Debugbar::info($id->comments);
-        $comment_models = $room_model->comments()->with('user')->get();
+        $comment_models = $id->comments()->with('user')->get();
         foreach($comment_models as $comment) {
           $comment['my_favorite'] = $user->isFavoritesComment($comment->id);
           // $comment['favorite_counter'] = $comment->favoriteCount();
@@ -33,8 +33,8 @@ class CommentController extends Controller
         'user_id' => Auth::id(),
         'room_id' => $id->id,
       ]);
-      //上の$commentとは別
-      $comment = Comment::where('id',$comment->id)->with('user')->first();
+
+      $comment = Comment::where('id',$request_comment->id)->with('user')->first();
       $comment['my_favorite'] = $user->isFavoritesComment($comment->id);
       $comment['favorite_counter'] = $comment->favoriteCount();
       // event(new NewComment($comment));
