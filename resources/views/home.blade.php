@@ -1,22 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-{{--
-@foreach ($collection_array as $room)
-
-{{var_dump($room->room_id)}}
-
-
-@endforeach
---}}
 
 {{--modal部分--}}
-<button id="show-modal" class="btn btn-light"  @click="$emit('show')" >TEST</button>
-<test-modal  @close="showModal = false" v-bind:auth-user="{{ Auth::user() }}" v-cloak >
-  <h4 slot="header">Room Create Form</h4>
-</test-modal>
-
-
 <div class="container" v-cloak>
   @if (session('status'))
       <div class="alert alert-success" role="alert">
@@ -27,8 +13,6 @@
           {{ session('danger') }}
       </div>
   @endif
-    {{--<div class="row justify-content-center">
-        <div class="col-md-8">--}}
             <div class="card">
                 <div class="card-header">
                   <ul class="nav nav-tabs nav-justified">
@@ -81,8 +65,6 @@
                 </div>
               </div>
               @endforelse
-          {{--</div>
-        </div>--}}
     </div>
 </div>
 @endsection
